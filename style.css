@@ -1,0 +1,36 @@
+body {
+    font-family: "Open Sans";
+    text-align: center;
+}
+
+
+
+#main {
+    margin: 10px 20px;
+    position: relative;
+
+}
+
+svg {
+    position: absolute;
+    z-index: 2;
+}
+
+select {
+    position: absolute;
+    z-index: 2;
+    left: 90px;
+    top: 70px;
+}
+
+
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: #f8f8f8;
+  color: #252525;
+  z-index: 2;
+}
+
+
