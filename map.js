@@ -1,7 +1,7 @@
 // #region SETUP
 d3.select("#main")
     .append("h1")
-    .text("Options to Vote Before Election Day, 2000-2024")
+    .text("Availability of Innovative Voter Registration Methods, 2000-2024")
 
 var yearList = [
     {option: "All Years",
@@ -32,7 +32,7 @@ var svg = d3.select("#main")
 
 // #region SCALES AND COLOR
 var colorScaleMain = d3.scaleOrdinal()
-    .domain(["All", "OVR", "AVR", "SDR"])
+    .domain(["OSA", "O", "A", "S"])
     .range(["#3b9171", "#efc55b", "#ef7f4d", "#9a53b7"])
 
 patterns = svg.append("defs")
@@ -59,63 +59,85 @@ patterns.append('rect')
     .attr("height", 30)
     .attr("fill", d => colorScaleMain(d.pattern))
 
-// svg.append('rect').attr('x',10)
-//     .attr('y',0)
-//     .attr('width',5)
-//     .attr('height',5)
-//     .attr("transform", "scale(8)")
-//     .attr("fill", "#fc0000")
-//     .attr('fill','url(#pattern-AVR)');
-
-var colorScaleOVR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#efc55b", "#bebebe", "#bebebe",
-        "#efc55b", "#efc55b", "#bebebe", "#efc55b"
-    ]);
-
-var colorScaleAVR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#bebebe", "#ef7f4d", "#bebebe",
-        "#ef7f4d", "#bebebe", "#ef7f4d", "#ef7f4d"
-    ]);
-
-var colorScaleSDR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#bebebe", "#bebebe", "#9a53b7",
-        "#bebebe", "#9a53b7", "#9a53b7", "#9a53b7"
-    ]);
-
-var colorScaleOVRAVR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#efc55b", "#ef7f4d", "#bebebe",
-        "url(#pattern-AVR)", "#efc55b", "#ef7f4d", "url(#pattern-AVR)"
-    ]);
-
-var colorScaleOVRSDR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#efc55b", "#bebebe", "#9a53b7",
-        "#efc55b", "url(#pattern-OVR)", "#9a53b7", "url(#pattern-OVR)"
-    ]);
-
-var colorScaleAVRSDR = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#bebebe", "#ef7f4d", "#9a53b7",
-        "#ef7f4d", "#9a53b7", "url(#pattern-SDR)", "url(#pattern-SDR)"
-    ]);
-
-var colorScaleALL = d3.scaleOrdinal()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8])
-    .range(["#bebebe", "#efc55b", "#ef7f4d", "#9a53b7",
-        "url(#pattern-AVR)", "url(#pattern-OVR)", "url(#pattern-SDR)", "#3b9171"
-    ]);
-
 var xScale = d3.scaleLinear()
     .domain([2000, 2024])
     .range([270, width-15]);
 
-var colorScales = [colorScaleOVR, colorScaleAVR, colorScaleSDR,
-    colorScaleOVRAVR, colorScaleOVRSDR, colorScaleAVRSDR, colorScaleALL
-]
+var colorScale = d3.scaleOrdinal()
+    .domain(["N", "S", "O", "A", "OS", "OA", "AS", "OSA"])
+    .range(["#ca3131", "#a33636", "#754242", "#460c0c",
+        "#961c1c", "#8a2020", "#d33d3d", "#471414"
+    ])
+
+var colorScalePatt = d3.scaleOrdinal()
+    .domain(["N", "S", "O", "A", "OS", "OA", "AS", "OSA"])
+    .range(["#bebebe", "#ac2b2b", "#bebebe", "#bebebe",
+        "#bebebe", "#bebebe", "#bebebe", "#bebebe"
+    ])
+
+function updateColorScale(filter) {
+    if (filter == "S") {
+        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#bebebe",
+            "#9a53b7", "#bebebe", "#9a53b7", "#9a53b7"
+        ])
+    } else if (filter == "O") {
+        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#bebebe",
+            "#efc55b", "#efc55b", "#bebebe", "#efc55b"
+        ])
+    } else if (filter == "A") {
+        colorScale.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
+            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        ])
+    } else if (filter == "OS") {
+        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
+            "#efc55b", "#efc55b", "#9a53b7", "#efc55b"
+        ])
+    } else if (filter == "OA") {
+        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
+            "#efc55b", "#efc55b", "#ef7f4d", "#efc55b"
+        ])
+    } else if (filter == "AS") {
+        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        ])
+    } else if (filter == "OSA") {
+        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
+            "#efc55b", "#efc55b", "#ef7f4d", "#3b9171"
+        ])
+    }
+}
+
+function updateColorScalePatt(filter) {
+    if (filter == "S") {
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#bebebe",
+            "#9a53b7", "#bebebe", "#9a53b7", "#9a53b7"
+        ])
+    } else if (filter == "O") {
+        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#bebebe",
+            "#efc55b", "#efc55b", "#bebebe", "#efc55b"
+        ])
+    } else if (filter == "A") {
+        colorScalePatt.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
+            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        ])
+    } else if (filter == "OS") {
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
+            "#9a53b7", "#efc55b", "#9a53b7", "#9a53b7"
+        ])
+    } else if (filter == "OA") {
+        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
+            "#efc55b", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        ])
+    } else if (filter == "AS") {
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#9a53b7", "#9a53b7"
+        ])
+    } else if (filter == "OSA") {
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#9a53b7", "#3b9171"
+        ])
+    }
+}
 
 
 // #endregion
@@ -204,19 +226,23 @@ var selectionsText = selectionOptions
 // #endregion
 
 // #region MAP SELECTION
-var colorScales = [colorScaleOVR, colorScaleAVR, colorScaleSDR,
-    colorScaleOVRAVR, colorScaleOVRSDR, colorScaleAVRSDR, colorScaleALL
-]
+
 
 var colorScaleIndex;
 
-var colorScalesText = ["All", "OVR", "AVR", "SDR"]
+var colorScalesText = [
+    {abb: "All", policy: "OSA"},
+    {abb: "OVR", policy: "O"},
+    {abb: "AVR", policy: "A"},
+    {abb: "SDR", policy: "S"}
+]
+
 
 var colorSelection = svg.append("g")
     .attr("id", "color-selection")
 
 var colorOptions = colorSelection.selectAll("rect")
-    .data(colorScalesText)
+    .data(["OSA", "O", "A", "S"])
     .enter()
     .append("rect")
     .attr("id", d => "option-" + d)
@@ -224,7 +250,7 @@ var colorOptions = colorSelection.selectAll("rect")
     .attr("height", 20)
     .attr("x", 10)
     .attr("y", (d, i) => i * 25 + 200)
-    .attr("fill", (d, i) => colorScaleMain(i))
+    .attr("fill", (d, i) => colorScaleMain(d))
     .attr("opacity", 0.4)
     .on("mouseover", function() {
         d3.select(this)
@@ -237,7 +263,7 @@ var colorOptions = colorSelection.selectAll("rect")
     })
 
 var colorOptionsText = colorSelection.selectAll("text")
-    .data(colorScalesText)
+    .data(["All", "OVR", "AVR", "SDR"])
     .enter()
     .append("text")
     .attr("x", 35)
@@ -357,15 +383,44 @@ var pauseButton = svg.append("g")
 
 // keeps track of the current year selected
 let currYear = 0;
-let currColorScale = colorScaleAVR;
 let yearSelect = 0;
+let currColorFilter;
 
 
 // load data
 Promise.all([
-    d3.csv("VREG.csv"),
+    d3.csv("VREG-data.csv"),
     d3.json("tile_map.json")
 ]).then(function([data, tileMap]) {
+    // #region PATTERN
+
+    var patternFill = svg.append("defs")
+        .selectAll("pattern")
+        .data(tileMap.states)
+        .enter()
+        .append("pattern")
+        .attr("id", d => "pattern-" + d.abb)
+        .attr("width", 2)
+        .attr("height", 2)
+        .attr('patternUnits',"userSpaceOnUse")
+        .attr("patternTransform", "rotate(-45)")
+
+    var fill = patternFill.append("rect")
+        .attr("id", d => "fill-" + d.abb)
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("fill", "#bebebe")
+        .classed("fill", true);
+
+    var pattern = patternFill.append('rect')
+        .attr("id", d => "patt-" + d.abb)
+        .attr("width", 1)
+        .attr("height", 30)
+        .attr("fill", "#bebebe")
+        .classed("fill", true);
+
+    // #endregion
+
     // #region MAP SETUP
     var mapContainer = svg.append("g")
         .attr("id", "map-container")
@@ -381,7 +436,7 @@ Promise.all([
             .attr("y", d => d.y)
             .attr("width", 5)
             .attr("height", 5)
-            .style("fill", "#bebebe");
+            .style("fill", d => "url(#pattern-" + d.abb + ")");
 
     var mapAbb = mapContainer.append("g")
         .attr("id", "map-abb")
@@ -401,14 +456,14 @@ Promise.all([
     // #endregion
 
     // #region UPDATE MAP FUNCTION
-    function updateMap(inputYear, colorScale) {
+    function updateMap(inputYear, colorFilter) {
         currYear = (inputYear - 2000) / 2; // update currYear based on inputYear
-        currColorScale = colorScale;
+        currColorFilter = colorFilter;
 
         // select data based on variable
         for (var i = 0; i < data.length; i++) { // loop through VBED data
             var dataState = data[i].State;
-            var dataValue = data[i].Value;
+            var dataValue = data[i].Policy;
             var dataYear = data[i].Year;
 
             for (var j = 0; j < tileMap.states.length; j++) { // loop through json until match
@@ -416,20 +471,32 @@ Promise.all([
 
                 if (dataState == mapState && dataYear == inputYear) {
                     tileMap.states[j].value = dataValue; // once match is found, update value based on year
-                    console.log("updated " + dataState + dataValue)
-                    break;
+                    console.log("patt-" + tileMap.states[j].abb)
+                    var currPatt = d3.select("#patt-" + tileMap.states[j].abb);
+
+                    if (dataValue == "N" | dataValue == "O" | dataValue == "S" | dataValue == "A" | dataValue == "OSA") {
+                        currPatt.classed("fill", true);
+                        currPatt.classed("patt", false);
+                    } else if (dataValue == "OS" | dataValue == "OA" | dataValue == "AS") {
+                        currPatt.classed("fill", false);
+                        currPatt.classed("patt", true);
+                    } 
                 }
             }
         }
+        console.log("this is " + currColorFilter)
+        updateColorScale(currColorFilter);
+        updateColorScalePatt(currColorFilter);
 
-        // update map
-        svg.select("#map")
-            .selectAll("rect")
+        d3.selectAll(".fill")
             .transition()
             .duration(750)
-            .style("fill", function(d) {
-                return colorScale(d.value)
-            });
+            .attr("fill", d => colorScale(d.value))
+
+        d3.selectAll(".patt")
+            .transition()
+            .duration(750)
+            .attr("fill", d => colorScalePatt(d.value))
 
         // update circle selection
         d3.selectAll("circle")
@@ -449,13 +516,13 @@ Promise.all([
     var timerFunc = function() {
         if (yearSelect == 2) { // presidential
             currYear = (currYear + 2) % 14;
-            updateMap(2000 + currYear * 2, currColorScale);
+            updateMap(2000 + currYear * 2, currColorFilter);
         } else if (yearSelect == 1) { // midterm
             currYear = (currYear + 2) % 12;
-            updateMap(2000 + currYear * 2, currColorScale);
+            updateMap(2000 + currYear * 2, currColorFilter);
         } else { // all
             currYear = (currYear + 1) % 13; 
-            updateMap(2000 + currYear * 2, currColorScale);
+            updateMap(2000 + currYear * 2, currColorFilter);
         }
     }
 
@@ -508,7 +575,7 @@ Promise.all([
             .on("click", function(e,d) {
                 timer.stop()
                 playing = false;
-                updateMap(d.year, currColorScale)
+                updateMap(d.year, currColorFilter)
 
                 d3.select(this)
                     .style("fill", "#243a76")
@@ -540,7 +607,7 @@ Promise.all([
             .on("click", function(e, d) {
                 timer.stop()
                 playing = false;
-                updateMap(d.year, currColorScale)
+                updateMap(d.year, currColorFilter)
 
                 d3.select(this)
                     .style("fill", "#243a76")
@@ -573,86 +640,91 @@ Promise.all([
     // #endregion
 
     // #region COLOR UPDATE
-    var colorSelected = "All"
+    var colorSelected = "OSA"
 
-    function colorSelect(newIndex) {
+    function colorSelect(newColor) {
         d3.select("#option-" + colorSelected).attr("opacity", 1);
-        colorScaleIndex = newIndex;
-        updateMap(2000 + currYear * 2, colorScales[newIndex]);
+        console.log("selected option " + colorSelected)
+        colorSelected = newColor;
+        updateMap(2000 + currYear * 2, newColor);
     }
 
-    function colorDeSelect(newIndex) {
+    function colorDeSelect(newColor) {
         d3.select("#option-" + colorSelected).attr("opacity", 0.4);
-        colorScaleIndex = newIndex;
-        updateMap(2000 + currYear * 2, colorScales[newIndex]);
+        colorSelected = newColor;
+        updateMap(2000 + currYear * 2, newColor);
     }
 
     colorOptions
         .on("click", function(d, i) {
             timer.stop();
             colorSelected = i;
-            if (i == "All") {
-                if (colorScaleIndex == 6) {
+            console.log(currColorFilter)
+
+            if (i == "OSA") {
+                if (currColorFilter == "OSA") {
                     return;
                 } else {
-                colorOptions.attr("opacity", 1)
-                updateMap(2000 + currYear * 2, colorScaleALL)
-                colorScaleIndex = 6;
-                }
-            } else if (i == "OVR") { // selecting OVR
-                if (colorScaleIndex == 0) { // if OVR already selected
-                    return;
-                } else if (colorScaleIndex == 1) { // if AVR already selected
-                    colorSelect(3);
-                } else if (colorScaleIndex == 2) {
-                    colorSelect(4);
-                } else if (colorScaleIndex == 3) {
-                    colorDeSelect(1);
-                } else if (colorScaleIndex == 4) {
-                    colorDeSelect(2);
-                } else if (colorScaleIndex == 5) {
-                    colorSelect(5)
-                } else if (colorScaleIndex == 6) {
-                    colorOptions.attr("opacity", 0.4)
-                    colorSelect(0);
-                }
-            } else if (i == "AVR") {
-                if (colorScaleIndex == 0) { // if OVR already selected
-                    colorSelect(3);
-                } else if (colorScaleIndex == 1) { // if AVR already selected
-                    return;
-                } else if (colorScaleIndex == 2) {
-                    colorSelect(5);
-                } else if (colorScaleIndex == 3) {
-                    colorDeSelect(0);
-                } else if (colorScaleIndex == 4) {
                     colorOptions.attr("opacity", 1)
-                    updateMap(2000 + currYear * 2, colorScaleALL)
-                    colorScaleIndex = 6;
-                } else if (colorScaleIndex == 5) {
-                    colorDeSelect(2);
-                } else if (colorScaleIndex == 6) {
-                    colorOptions.attr("opacity", 0.4)
-                    colorSelect(1);
+                    updateMap(2000 + currYear * 2, "OSA")
+                    currColorFilter = "OSA";
                 }
-            } else if (i == "SDR") {
-                if (colorScaleIndex == 0) { // if OVR already selected
-                    colorSelect(4);
-                } else if (colorScaleIndex == 1) { // if AVR already selected
-                    colorSelect(5);
-                } else if (colorScaleIndex == 2) {
+            } else if (i == "O") { // selecting OVR
+                if (currColorFilter == "O") { // if OVR already selected
                     return;
-                } else if (colorScaleIndex == 3) {
-                    colorOptions.attr("opacity", 1)
-                    updateMap(2000 + currYear * 2, colorScaleALL)
-                    colorScaleIndex = 6;
-                } else if (colorScaleIndex == 4) {
-                    colorDeSelect(0);
-                } else if (colorScaleIndex == 5) {
-                    colorDeSelect(1)
-                } else if (colorScaleIndex == 6) {
+                } else if (currColorFilter == "A") { // if AVR already selected
+                    colorSelect("A");
+                } else if (currColorFilter == "S") {
+                    colorSelect("OS");
+                } else if (currColorFilter == "OA") {
+                    colorDeSelect("A");
+                } else if (currColorFilter == "OS") {
+                    colorDeSelect("S");
+                } else if (currColorFilter == "AS") {
                     colorOptions.attr("opacity", 0.4)
-                    colorSelect(2);
+                    colorSelect("OSA");
+                    currColorFilter = "OSA";
+                } else if (currColorFilter == "OSA") {
+                    colorOptions.attr("opacity", 0.4)
+                    colorSelect("O");
+                }
+            } else if (i == "A") {
+                if (currColorFilter == "O") { // if OVR already selected
+                    colorSelect("OA");
+                } else if (currColorFilter == "A") { // if AVR already selected
+                    return;
+                } else if (currColorFilter == "S") {
+                    colorSelect("AS");
+                } else if (currColorFilter == "OA") {
+                    colorDeSelect("O");
+                } else if (currColorFilter == "OS") {
+                    colorOptions.attr("opacity", 1)
+                    updateMap(2000 + currYear * 2, "OSA")
+                    currColorFilter = "OSA";
+                } else if (currColorFilter == "AS") {
+                    colorDeSelect("S");
+                } else if (currColorFilter == "OSA") {
+                    colorOptions.attr("opacity", 0.4)
+                    colorSelect("A");
+                }
+            } else if (i == "S") {
+                if (currColorFilter == "O") { // if OVR already selected
+                    colorSelect("OS");
+                } else if (currColorFilter == "A") { // if AVR already selected
+                    colorSelect("AS");
+                } else if (currColorFilter == "S") {
+                    return;
+                } else if (currColorFilter == "OA") {
+                    colorOptions.attr("opacity", 1)
+                    updateMap(2000 + currYear * 2, "OSA")
+                    currColorFilter = "OSA";
+                } else if (currColorFilter == "OS") {
+                    colorDeSelect("O");
+                } else if (currColorFilter == "AS") {
+                    colorDeSelect("A")
+                } else if (currColorFilter == "OSA") {
+                    colorOptions.attr("opacity", 0.4)
+                    colorSelect("S");
                 }
             } 
         })
@@ -661,8 +733,10 @@ Promise.all([
         .transition()
         .duration(500)
         .attr("opacity", 1)
-    updateMap(2000 + currYear * 2, colorScaleALL)
-    colorScaleIndex = 6;
+
+    updateMap(2000 + currYear * 2, "OSA");
+
+    currColorFilter = "OSA";
 
     // #endregion
 
@@ -698,7 +772,7 @@ Promise.all([
     function selectionBehavior(year, opacity1, opacity2) {
         currYear = (year - 2000) / 2;
         timer.stop();
-        updateMap(year, currColorScale);
+        updateMap(year, currColorFilter);
 
         presidentialLabels.attr("opacity", opacity1)
         presidentialYears.attr("opacity", opacity1)
