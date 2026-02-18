@@ -35,30 +35,6 @@ var colorScaleMain = d3.scaleOrdinal()
     .domain(["OSA", "O", "A", "S"])
     .range(["#3b9171", "#efc55b", "#ef7f4d", "#9a53b7"])
 
-patterns = svg.append("defs")
-    .selectAll("pattern")
-    .data([{primary: "OVR", pattern: "AVR"},
-        {primary: "AVR", pattern: "SDR"},
-        {primary: "SDR", pattern: "OVR"}
-    ])
-    .enter()
-    .append("pattern")
-    .attr('id', d => 'pattern-' + d.pattern)
-    .attr("width", 2)
-    .attr("height", 2)
-    .attr('patternUnits',"userSpaceOnUse")
-    .attr("patternTransform", "rotate(-45)")
-
-patterns.append("rect")
-    .attr("width", 40)
-    .attr("height", 40)
-    .attr("fill", d => colorScaleMain(d.primary))
-
-patterns.append('rect')
-    .attr("width", 1)
-    .attr("height", 30)
-    .attr("fill", d => colorScaleMain(d.pattern))
-
 var xScale = d3.scaleLinear()
     .domain([2000, 2026])
     .range([270, width-20]);
@@ -226,17 +202,6 @@ var selectionsText = selectionOptions
 // #endregion
 
 // #region MAP SELECTION
-
-
-var colorScaleIndex;
-
-var colorScalesText = [
-    {abb: "All", policy: "OSA"},
-    {abb: "OVR", policy: "O"},
-    {abb: "AVR", policy: "A"},
-    {abb: "SDR", policy: "S"}
-]
-
 
 var colorSelection = svg.append("g")
     .attr("id", "color-selection")
@@ -521,10 +486,10 @@ Promise.all([
             currYear = (currYear + 2) % 14;
             updateMap(2000 + currYear * 2, currColorFilter);
         } else if (yearSelect == 1) { // midterm
-            currYear = (currYear + 2) % 12;
+            currYear = (currYear + 2) % 14;
             updateMap(2000 + currYear * 2, currColorFilter);
         } else { // all
-            currYear = (currYear + 1) % 13; 
+            currYear = (currYear + 1) % 14; 
             updateMap(2000 + currYear * 2, currColorFilter);
         }
     }
