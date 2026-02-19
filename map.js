@@ -154,10 +154,37 @@ var selectionBar = selectionContainer.append("rect")
         }
     })
 
+// triangle on selection bar to indicate to click
+selectionContainer.append("path")
+    .attr("d", "M1, 1 L1, 3 L2, 3 L1, 2")
+    .attr("transform", "translate(105, 10) scale(12) rotate(-45)")
+    .attr("fill", "#dbdbdb")
+    .on("mouseover", function() {
+        d3.select(this).style("cursor", "pointer");
+        selectionBar
+            .style("stroke", "#243a76")
+            .style("stroke-width", 0.7)
+    })
+    .on("mouseout", function() {
+        d3.select(this)
+            .style("stroke-width", 0);
+    })
+    .on("click", function() {
+        if (!selectionBarSelected) {
+            selections.attr("opacity", 1)
+            selectionsText.attr("opacity", 1)
+            selectionBarSelected = true;
+        } else {
+            selections.attr("opacity", 0)
+            selectionsText.attr("opacity", 0)
+            selectionBarSelected = false;
+        }
+    });
+
 var selectionBarText = selectionContainer.append("text")
     .text("All Years")
     .attr("fill", "black")
-    .attr("x", 10)
+    .attr("x", 8)
     .attr("y", 27)
 
 var selectionOptions = selectionContainer.append("g")
@@ -193,15 +220,14 @@ var selectionsText = selectionOptions
     .enter()
     .append("text")
     .text(d => d.option)
-    .attr("y", (d, i) => (i + 1) * 27 + 27)
-    .attr("x", 10)
+    .attr("y", (d, i) => (i + 1) * 26 + 25)
+    .attr("x", 8)
     .attr("fill", "black")
     .attr("opacity", 0)
-    .attr("font-size", "12px")
 
 // #endregion
 
-// #region MAP SELECTION
+// #region COLOR SELECTION
 
 var colorSelection = svg.append("g")
     .attr("id", "color-selection")
@@ -238,14 +264,19 @@ var colorOptionsText = colorSelection.selectAll("text")
 // #endregion
 
 // #region YEAR TIMELINE BUTTONS
-svg.append("g")
+
+// rectangle connecting years
+var yearOptions = svg.append("g")
     .attr("id", "year-options")
+
+var yearRect = yearOptions
     .append("rect")
-        .attr("x", 260)
-        .attr("y", 20)
-        .attr("width", width - 280)
-        .attr("height", 2)
-        .attr("fill", "#bebebe")
+    .attr("id", d => "year-rect")
+    .attr("x", d => xScale(2000))
+    .attr("y", 20)
+    .attr("width", d => xScale(2026) - xScale(2000))
+    .attr("height", 2)
+    .attr("fill", "#bebebe");
 
 var midtermYears = d3.select("#year-options")
     .append("g")
@@ -313,7 +344,7 @@ var playButton = svg.append("g")
         .attr("id", "play")
         .attr("d", "M0,0 L8,5 L0,10 L0,0")
         .attr("fill", "#bebebe")
-        .attr("transform", "translate(180, 8.5) scale(2.5)")
+        .attr("transform", "translate(180, 10.1) scale(2.3)")
         .on("mouseover", function(event, d) {
         d3.select(this)
             .style("stroke", "#243a76")
@@ -332,7 +363,7 @@ var pauseButton = svg.append("g")
         .attr("id", "pause")
         .attr("d", "M0,0 L0,10 L2,10 L2,0 L0,0 M4,0 L4,10 L6,10 L6,0 L4,0")
         .attr("fill", "#bebebe")
-        .attr("transform", "translate(220, 8.5) scale(2.5)")
+        .attr("transform", "translate(220, 10.1) scale(2.3)")
             .on("mouseover", function(event, d) {
         d3.select(this)
             .style("stroke", "#243a76")
@@ -357,34 +388,6 @@ Promise.all([
     d3.csv("VREG-data.csv"),
     d3.json("tile_map.json")
 ]).then(function([data, tileMap]) {
-    // #region PATTERN
-
-    var patternFill = svg.append("defs")
-        .selectAll("pattern")
-        .data(tileMap.states)
-        .enter()
-        .append("pattern")
-        .attr("id", d => "pattern-" + d.abb)
-        .attr("width", 2)
-        .attr("height", 2)
-        .attr('patternUnits',"userSpaceOnUse")
-        .attr("patternTransform", "rotate(-45)")
-
-    var fill = patternFill.append("rect")
-        .attr("id", d => "fill-" + d.abb)
-        .attr("width", 40)
-        .attr("height", 40)
-        .attr("fill", "#bebebe")
-        .classed("fill", true);
-
-    var pattern = patternFill.append('rect')
-        .attr("id", d => "patt-" + d.abb)
-        .attr("width", 1)
-        .attr("height", 30)
-        .attr("fill", "#bebebe")
-        .classed("fill", true);
-
-    // #endregion
 
     // #region MAP SETUP
     var mapContainer = svg.append("g")
@@ -401,7 +404,18 @@ Promise.all([
             .attr("y", d => d.y)
             .attr("width", 5)
             .attr("height", 5)
-            .style("fill", d => "url(#pattern-" + d.abb + ")");
+            .style("fill", "#bebebe");
+
+    var mapTri = mapContainer.append("g")
+        .attr("id", "map-tri")
+        .selectAll("path")
+        .data(tileMap.states)
+        .enter()
+        .append("path")
+            .attr("d", "M 0 0 L 5 5 L 0 5 L 0 0")
+            .attr("id", d => "tri-" + d.abb)
+            .attr("transform", d => "translate(" + d.x + ", " + d.y + ")")
+            .style("fill", "#bebebe");
 
     var mapAbb = mapContainer.append("g")
         .attr("id", "map-abb")
@@ -436,35 +450,21 @@ Promise.all([
 
                 if (dataState == mapState && dataYear == inputYear) {
                     tileMap.states[j].value = dataValue; // once match is found, update value based on year
-                    console.log("patt-" + tileMap.states[j].abb)
-
-                    var currPatt = d3.select("#patt-" + tileMap.states[j].abb);
-
-                    if (dataValue == "N" | dataValue == "O" | dataValue == "S" | dataValue == "A") {
-                        console.log("it's NOT a pattern!")
-                        currPatt.classed("fill", true);
-                        currPatt.classed("patt", false);
-                    } else if (dataValue == "OS" | dataValue == "OA" | dataValue == "SA" | dataValue == "OSA") {
-                        console.log("it's a pattern!")
-                        currPatt.classed("fill", false);
-                        currPatt.classed("patt", true);
-                    } 
                 }
             }
         }
-        console.log("this is " + currColorFilter)
         updateColorScale(currColorFilter);
         updateColorScalePatt(currColorFilter);
 
-        d3.selectAll(".fill")
+        map
             .transition()
             .duration(750)
-            .attr("fill", d => colorScale(d.value))
+            .style("fill", d => colorScale(d.value))
 
-        d3.selectAll(".patt")
+        mapTri
             .transition()
             .duration(750)
-            .attr("fill", d => colorScalePatt(d.value))
+            .style("fill", d => colorScalePatt(d.value))
 
         // update circle selection
         d3.selectAll("circle")
@@ -534,76 +534,6 @@ Promise.all([
                 .duration(500)
                 .attr("fill", "#bebebe");
         })
-
-    // #endregion
-
-    // #region YEAR TIMELINE BUTTON FUNCTIONS
-    function initMidtermYears () {
-        midtermYears
-            .on("click", function(e,d) {
-                timer.stop()
-                playing = false;
-                updateMap(d.year, currColorFilter)
-
-                d3.select(this)
-                    .style("fill", "#243a76")
-
-                d3.select("#play")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
-
-                d3.select("#pause")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
-            })
-            .on("mouseover", function(e, d) {
-                d3.select(this)
-                    .style("stroke", "#243a76")
-                    .style("stroke-width", 1.2)
-                    .style("cursor", "pointer");
-            })
-            .on("mouseout", function(event, d) {
-                d3.select(this)
-                    .style("stroke-width", 0);
-            });
-    }
-
-    function initPresidentialYears () {
-        presidentialYears
-            .on("click", function(e, d) {
-                timer.stop()
-                playing = false;
-                updateMap(d.year, currColorFilter)
-
-                d3.select(this)
-                    .style("fill", "#243a76")
-
-                d3.select("#play")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
-
-                d3.select("#pause")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
-            })
-            .on("mouseover", function(e, d) {
-                d3.select(this)
-                    .style("stroke", "#243a76")
-                    .style("stroke-width", 1.2)
-                    .style("cursor", "pointer");
-            })
-            .on("mouseout", function(event, d) {
-                d3.select(this)
-                    .style("stroke-width", 0);
-            });
-    }
-
-    initMidtermYears();
-    initPresidentialYears();
 
     // #endregion
 
@@ -697,13 +627,14 @@ Promise.all([
             } 
         })
 
+    // initialize color options
     colorOptions
         .transition()
         .duration(500)
         .attr("opacity", 1)
 
+    // initialize map
     updateMap(2000 + currYear * 2, "OSA");
-
     currColorFilter = "OSA";
 
     // #endregion
@@ -713,14 +644,13 @@ Promise.all([
         .append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
+
     map
         .on("mouseover", function(e, d) {
             d3.select(this)
                 .attr("stroke-width", 2.2);
             toolTip.style("opacity", 1)
-                //.html(d.properties.name + "\t" + d.properties.value)
-                //.style("left", (e.pageX-25) + "px")
-                //.style("top", (e.pageY-75) + "px");
+
         })
         .on("mouseout", function(d) {
             d3.select(this)
@@ -733,6 +663,76 @@ Promise.all([
                 .style("left", (d3.pointer(e)[0]+100) + "px")
                 .style("top", (d3.pointer(e)[1]+100) + "px")
         });
+
+    // #endregion
+
+    // #region YEAR TIMELINE BUTTON FUNCTIONS
+    function initMidtermYears () {
+        midtermYears
+            .on("click", function(e,d) {
+                timer.stop()
+                playing = false;
+                updateMap(d.year, currColorFilter)
+
+                d3.select(this)
+                    .style("fill", "#243a76")
+
+                d3.select("#play")
+                    .transition()
+                    .duration(500)
+                    .attr("fill", "#bebebe");
+
+                d3.select("#pause")
+                    .transition()
+                    .duration(500)
+                    .attr("fill", "#bebebe");
+            })
+            .on("mouseover", function(e, d) {
+                d3.select(this)
+                    .style("stroke", "#243a76")
+                    .style("stroke-width", 1.2)
+                    .style("cursor", "pointer");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                    .style("stroke-width", 0);
+            });
+    }
+
+    function initPresidentialYears () {
+        presidentialYears
+            .on("click", function(e, d) {
+                timer.stop()
+                playing = false;
+                updateMap(d.year, currColorFilter)
+
+                d3.select(this)
+                    .style("fill", "#243a76")
+
+                d3.select("#play")
+                    .transition()
+                    .duration(500)
+                    .attr("fill", "#bebebe");
+
+                d3.select("#pause")
+                    .transition()
+                    .duration(500)
+                    .attr("fill", "#bebebe");
+            })
+            .on("mouseover", function(e, d) {
+                d3.select(this)
+                    .style("stroke", "#243a76")
+                    .style("stroke-width", 1.2)
+                    .style("cursor", "pointer");
+            })
+            .on("mouseout", function(event, d) {
+                d3.select(this)
+                    .style("stroke-width", 0);
+            });
+    }
+
+    initMidtermYears();
+    initPresidentialYears();
 
     // #endregion
 
@@ -751,27 +751,35 @@ Promise.all([
     selections
         .on("click", function(e, d, i) {
             yearSelect = d.index;
-            selections.attr("opacity", 0);
-            selectionsText.attr("opacity", 0);
+            selections.attr("opacity", 0); // dropdown options not visible
+            selectionsText.attr("opacity", 0); // dropdown text not visible
             selectionBarSelected = false;
             
-            selectionBarText.text(d.option);
+            selectionBarText.text(d.option); // update selected text
 
             if (yearSelect == 1) { // midterm
-            selectionBehavior(2002, 0.1, 1);
-            initMidtermYears();
-            presidentialYears
-                .on("click", function() {
-                    return;
-                })
-                .on("mouseover", function() {
-                    return;
-                })
-                .on("mouseout",function() {
-                    return;
-                });
+                yearRect // update year rectangle
+                    .attr("x", xScale(2002))
+                    .attr("width", xScale(2026) - xScale(2002))
+
+                selectionBehavior(2002, 0.1, 1);
+                initMidtermYears();
+
+                presidentialYears
+                    .on("click", function() {
+                        return;
+                    })
+                    .on("mouseover", function() {
+                        return;
+                    })
+                    .on("mouseout",function() {
+                        return;
+                    });
 
         } else if (yearSelect == 2) { // presidental
+            yearRect
+                .attr("x", xScale(2000))
+                .attr("width", xScale(2024) - xScale(2000))
             selectionBehavior(2000, 1, 0.1);
             initPresidentialYears();
             midtermYears
@@ -786,6 +794,10 @@ Promise.all([
                 });
 
         } else if (yearSelect == 0) { // all
+            yearRect
+                .attr("x", xScale(2000))
+                .attr("width", xScale(2026) - xScale(2000))
+
             selectionBehavior(2000, 1, 1);
             initPresidentialYears();
             initMidtermYears();
