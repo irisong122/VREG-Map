@@ -1,7 +1,7 @@
 // #region SETUP
 d3.select("#main")
     .append("h1")
-    .text("Availability of Innovative Voter Registration Methods, 2000-2024")
+    .text("Availability of Innovative Voter Registration Methods, 2000-2026")
 
 var yearList = [
     {option: "All Years",
@@ -19,25 +19,29 @@ var yearList = [
             {year: 2012}, {year: 2016}, {year: 2020}, {year: 2024}]}
 ]
 
-var width = 1000;
+var width = 666;
 var height = 600;
+
+var margin = {
+    left: 20,
+    right: 20
+}
 
 var svg = d3.select("#main")
   .append("svg")
   .attr("width", width)
-  .attr("height", height)
-  .attr("transform", "translate(-500, 0)")
-
+  .attr("height", height);
+  
 // #endregion
 
 // #region SCALES AND COLOR
 var colorScaleMain = d3.scaleOrdinal()
     .domain(["OSA", "O", "A", "S"])
-    .range(["#3b9171", "#efc55b", "#ef7f4d", "#9a53b7"])
+    .range(["#3b9171", "#efc55b", "#6c8cc7", "#9a53b7"])
 
 var xScale = d3.scaleLinear()
     .domain([2000, 2026])
-    .range([270, width-20]);
+    .range([65, width-margin.right]);
 
 var colorScale = d3.scaleOrdinal()
     .domain(["N", "S", "O", "A", "OS", "OA", "SA", "OSA"])
@@ -61,24 +65,24 @@ function updateColorScale(filter) {
             "#efc55b", "#efc55b", "#bebebe", "#efc55b"
         ])
     } else if (filter == "A") {
-        colorScale.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
-            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        colorScale.range(["#bebebe", "#bebebe", "#bebebe", "#6c8cc7",
+            "#bebebe", "#6c8cc7", "#6c8cc7", "#6c8cc7"
         ])
     } else if (filter == "OS") {
         colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
             "#efc55b", "#efc55b", "#9a53b7", "#efc55b"
         ])
     } else if (filter == "OA") {
-        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
-            "#efc55b", "#efc55b", "#ef7f4d", "#efc55b"
+        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#6c8cc7",
+            "#efc55b", "#efc55b", "#6c8cc7", "#efc55b"
         ])
     } else if (filter == "SA") {
-        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
-            "#9a53b7", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#6c8cc7",
+            "#9a53b7", "#6c8cc7", "#6c8cc7", "#6c8cc7"
         ])
     } else if (filter == "OSA") {
-        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
-            "#efc55b", "#efc55b", "#ef7f4d", "#3b9171"
+        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#6c8cc7",
+            "#efc55b", "#efc55b", "#6c8cc7", "#3b9171"
         ])
     }
 }
@@ -93,24 +97,24 @@ function updateColorScalePatt(filter) {
             "#efc55b", "#efc55b", "#bebebe", "#efc55b"
         ])
     } else if (filter == "A") {
-        colorScalePatt.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
-            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        colorScalePatt.range(["#bebebe", "#bebebe", "#bebebe", "#6c8cc7",
+            "#bebebe", "#6c8cc7", "#6c8cc7", "#6c8cc7"
         ])
     } else if (filter == "OS") {
         colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
             "#9a53b7", "#efc55b", "#9a53b7", "#9a53b7"
         ])
     } else if (filter == "OA") {
-        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
-            "#efc55b", "#ef7f4d", "#ef7f4d", "#ef7f4d"
+        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#6c8cc7",
+            "#efc55b", "#6c8cc7", "#6c8cc7", "#6c8cc7"
         ])
     } else if (filter == "SA") {
-        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
-            "#9a53b7", "#ef7f4d", "#9a53b7", "#9a53b7"
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#6c8cc7",
+            "#9a53b7", "#6c8cc7", "#9a53b7", "#9a53b7"
         ])
     } else if (filter == "OSA") {
-        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
-            "#9a53b7", "#ef7f4d", "#9a53b7", "#3b9171"
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#6c8cc7",
+            "#9a53b7", "#6c8cc7", "#9a53b7", "#3b9171"
         ])
     }
 }
@@ -129,8 +133,8 @@ var selectionContainer = svg.append("g")
 var selectionBar = selectionContainer.append("rect")
     .attr("width", 150)
     .attr("height", 25)
-    .attr("x", 2)
-    .attr("y", 10)
+    .attr("x", (width-150) / 2)
+    .attr("y", 65)
     .attr("fill", "#ebebeb")
     .on("mouseover", function() {
         d3.select(this)
@@ -147,45 +151,28 @@ var selectionBar = selectionContainer.append("rect")
             selections.attr("opacity", 1)
             selectionsText.attr("opacity", 1)
             selectionBarSelected = true;
+            selectionTri.attr("fill", "#243a76")
         } else {
             selections.attr("opacity", 0)
             selectionsText.attr("opacity", 0)
             selectionBarSelected = false;
+            selectionTri.attr("fill", "#dbdbdb")
         }
     })
 
 // triangle on selection bar to indicate to click
-selectionContainer.append("path")
+var selectionTri = selectionContainer.append("path")
     .attr("d", "M1, 1 L1, 3 L2, 3 L1, 2")
-    .attr("transform", "translate(105, 10) scale(12) rotate(-45)")
+    .attr("transform", "translate(" + ((width-150) / 2 + 100) + ", 65) scale(12) rotate(-45)")
     .attr("fill", "#dbdbdb")
-    .on("mouseover", function() {
-        d3.select(this).style("cursor", "pointer");
-        selectionBar
-            .style("stroke", "#243a76")
-            .style("stroke-width", 0.7)
-    })
-    .on("mouseout", function() {
-        d3.select(this)
-            .style("stroke-width", 0);
-    })
-    .on("click", function() {
-        if (!selectionBarSelected) {
-            selections.attr("opacity", 1)
-            selectionsText.attr("opacity", 1)
-            selectionBarSelected = true;
-        } else {
-            selections.attr("opacity", 0)
-            selectionsText.attr("opacity", 0)
-            selectionBarSelected = false;
-        }
-    });
+    .style("pointer-events", "none");
 
 var selectionBarText = selectionContainer.append("text")
     .text("All Years")
     .attr("fill", "black")
-    .attr("x", 8)
-    .attr("y", 27)
+    .attr("x", (width-150) / 2 + 5)
+    .attr("y", 82)
+    .attr("font-size", "14px");
 
 var selectionOptions = selectionContainer.append("g")
     .attr("id", "selection-options")
@@ -195,12 +182,12 @@ var selections = selectionOptions
     .data(yearList)
     .enter()
     .append("rect")
-    .attr("width", 150)
-    .attr("height", 25)
-    .attr("x", 2)
-    .attr("y", (d, i) => (i + 1) * 25 + 10)
-    .attr("fill", "#ebebeb")
-    .attr("opacity", 0)
+        .attr("width", 150)
+        .attr("height", 25)
+        .attr("x", (width-150) / 2)
+        .attr("y", (d, i) => (i + 1) * 25 + 65)
+        .attr("fill", "#ebebeb")
+        .attr("opacity", 0)
     .on("mouseover", function() {
         if (selectionBarSelected) {
             d3.select(this)
@@ -212,7 +199,7 @@ var selections = selectionOptions
     .on("mouseout", function() {
         d3.select(this)
             .style("stroke-width", 0);
-    })
+    });
 
 var selectionsText = selectionOptions
     .selectAll("text")
@@ -220,10 +207,11 @@ var selectionsText = selectionOptions
     .enter()
     .append("text")
     .text(d => d.option)
-    .attr("y", (d, i) => (i + 1) * 26 + 25)
-    .attr("x", 8)
+    .attr("y", (d, i) => (i + 1) * 25 + 82)
+    .attr("x", (width-150) / 2 + 8)
     .attr("fill", "black")
     .attr("opacity", 0)
+    .attr("font-size", "14px");
 
 // #endregion
 
@@ -236,13 +224,13 @@ var colorOptions = colorSelection.selectAll("rect")
     .data(["OSA", "O", "A", "S"])
     .enter()
     .append("rect")
-    .attr("id", d => "option-" + d)
-    .attr("width", 20)
-    .attr("height", 20)
-    .attr("x", 10)
-    .attr("y", (d, i) => i * 25 + 200)
-    .attr("fill", (d, i) => colorScaleMain(d))
-    .attr("opacity", 0.4)
+        .attr("id", d => "option-" + d)
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("x", 475)
+        .attr("y", (d, i) => i * 30 + 400)
+        .attr("fill", (d, i) => colorScaleMain(d))
+        .attr("opacity", 0.4)
     .on("mouseover", function() {
         d3.select(this)
             .attr("stroke", "#311b6d")
@@ -253,23 +241,37 @@ var colorOptions = colorSelection.selectAll("rect")
         d3.select(this).attr("stroke-width", 0);
     })
 
+var checkMarks = colorSelection.selectAll("path")
+    .data(["OSA", "O", "A", "S"])
+    .enter()
+    .append("path")
+        .attr("id", d => "check-" + d)
+        .attr("d", "M 6 7 L 7 6 L 10 9 L 17 1 L 18 2 L 10 11 L 6 7")
+        .attr("fill", "#555555")
+        .attr("opacity", 0.7)
+        .attr("transform", (d, i) => "translate(467," + (i * 30 + 395) + ") scale(1.8)")
+        .style("pointer-events", "none");
+
 var colorOptionsText = colorSelection.selectAll("text")
-    .data(["All", "OVR", "AVR", "SDR"])
+    .data(["All Methods", "Online Voter Registration",
+         "Automatic Voter Registration", "Same Day Registration"])
     .enter()
     .append("text")
-    .attr("x", 35)
-    .attr("y", (d, i) => i * 25 + 215)
+    .attr("x", 500)
+    .attr("y", (d, i) => i * 30 + 415)
     .text(d => d)
+    .attr("font-size", "10pt")
 
 // #endregion
 
 // #region YEAR TIMELINE BUTTONS
 
 // rectangle connecting years
-var yearOptions = svg.append("g")
-    .attr("id", "year-options")
+var yearTimeline = svg.append("g")
+    .attr("id", "year-timeline")
 
-var yearRect = yearOptions
+// rect connecting years
+var yearRect = yearTimeline
     .append("rect")
     .attr("id", d => "year-rect")
     .attr("x", d => xScale(2000))
@@ -278,61 +280,38 @@ var yearRect = yearOptions
     .attr("height", 2)
     .attr("fill", "#bebebe");
 
-var midtermYears = d3.select("#year-options")
+// circles for each year 
+var yearOptions = yearTimeline
     .append("g")
-    .attr("id", "midterm")
+    .attr("id", "year-options")
     .selectAll("circle")
-    .data(yearList[1].years)
+    .data(yearList[0].years)
     .enter()
     .append("circle")
         .attr("id", d => "circle-" + d.year)
-        .attr("cx", function(d) {return xScale(d.year); })
+        .attr("cx", d => xScale(d.year))
         .attr("cy", 20)
-        .attr("r", 10)
-        .style("fill", "#bebebe");
-
-var presidentialYears = d3.select("#year-options")
-    .append("g")
-    .attr("id", "presidential")
-    .selectAll("circle")
-    .data(yearList[2].years)
-    .enter()
-    .append("circle")
-        .attr("id", d => "circle-" + d.year)
-        .attr("cx", function(d) {return xScale(d.year); })
-        .attr("cy", 20)
-        .attr("r", 10)
-        .style("fill", "#bebebe");
+        .attr("r", 8)
+        .style("fill", "#bebebe")
+        .classed("presidential", d => (d.year - 2000) % 4 == 0)
+        .classed("midterm", d => (d.year - 2000) % 4 != 0);
 
 // add text below circles
-var yearLabels = svg.append("g")
+var yearLabels = yearTimeline
+    .append("g")
     .attr("id", "year-labels")
-
-var midtermLabels = d3.select("#year-labels")
-    .append("g")
-    .attr("id", "midterm")
     .selectAll("text")
-    .data(yearList[1].years)
+    .data(yearList[0].years)
     .enter()
     .append("text")
-        .text(function(d) {return d.year })
-        .attr("x", function(d) {return xScale(d.year); })
-        .attr("y", 50)
+        .text(d => d.year)
+        .attr("x", d => xScale(d.year))
+        .attr("y", 45)
         .attr("fill", "black")
-        .attr("text-anchor", "middle");
-
-var presidentialLabels = d3.select("#year-labels")
-    .append("g")
-    .attr("id", "midterm")
-    .selectAll("text")
-    .data(yearList[2].years)
-    .enter()
-    .append("text")
-        .text(function(d) {return d.year })
-        .attr("x", function(d) {return xScale(d.year); })
-        .attr("y", 50)
-        .attr("fill", "black")
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .attr("font-size", "14px")
+        .classed("presidential-label", d => (d.year - 2000) % 4 == 0)
+        .classed("midterm-label", d => (d.year - 2000) % 4 != 0);
 
 // #endregion
     
@@ -344,8 +323,8 @@ var playButton = svg.append("g")
         .attr("id", "play")
         .attr("d", "M0,0 L8,5 L0,10 L0,0")
         .attr("fill", "#bebebe")
-        .attr("transform", "translate(180, 10.1) scale(2.3)")
-        .on("mouseover", function(event, d) {
+        .attr("transform", "translate(10, 10.1) scale(1.8)")
+    .on("mouseover", function(event, d) {
         d3.select(this)
             .style("stroke", "#243a76")
             .style("stroke-width", 0.3)
@@ -363,8 +342,8 @@ var pauseButton = svg.append("g")
         .attr("id", "pause")
         .attr("d", "M0,0 L0,10 L2,10 L2,0 L0,0 M4,0 L4,10 L6,10 L6,0 L4,0")
         .attr("fill", "#bebebe")
-        .attr("transform", "translate(220, 10.1) scale(2.3)")
-            .on("mouseover", function(event, d) {
+        .attr("transform", "translate(35, 10.1) scale(1.8)")
+    .on("mouseover", function(event, d) {
         d3.select(this)
             .style("stroke", "#243a76")
             .style("stroke-width", 0.3)
@@ -373,7 +352,7 @@ var pauseButton = svg.append("g")
     .on("mouseout", function(event, d) {
         d3.select(this)
             .style("stroke-width", 0);
-    });;
+    });
 
 // #endregion
 
@@ -393,18 +372,19 @@ Promise.all([
     var mapContainer = svg.append("g")
         .attr("id", "map-container")
 
+    var mapSize = 8;
+
     var map = mapContainer.append("g")
         .attr("id", "map")
         .selectAll("rect")
         .data(tileMap.states)
         .enter()
         .append("rect")
-            .attr("id", d => d.abb)
-            .attr("x", d => d.x)
-            .attr("y", d => d.y)
-            .attr("width", 5)
-            .attr("height", 5)
-            .style("fill", "#bebebe");
+            .attr("x", d => d.x * mapSize)
+            .attr("y", d => d.y * mapSize)
+            .attr("width", 5 * mapSize)
+            .attr("height", 5 * mapSize)
+            .attr("fill", "#bebebe");
 
     var mapTri = mapContainer.append("g")
         .attr("id", "map-tri")
@@ -414,8 +394,9 @@ Promise.all([
         .append("path")
             .attr("d", "M 0 0 L 5 5 L 0 5 L 0 0")
             .attr("id", d => "tri-" + d.abb)
-            .attr("transform", d => "translate(" + d.x + ", " + d.y + ")")
+            .attr("transform", d => "translate(" + d.x * mapSize + ", " + d.y * mapSize + ") scale(" + mapSize + ")")
             .style("fill", "#bebebe");
+
 
     var mapAbb = mapContainer.append("g")
         .attr("id", "map-abb")
@@ -424,17 +405,19 @@ Promise.all([
         .enter()
         .append("text")
             .text(d => d.abb)
-            .attr("x", d => d.x + 2.4)
-            .attr("y", d => d.y + 3.2)
+            .attr("x", d => d.x * mapSize + 19)
+            .attr("y", d => d.y * mapSize + 25)
             .attr("fill", "black")
-            .attr("font-size", "2px")
-            .attr("text-anchor", "middle")
+            .attr("font-size", "14px")
+            .attr("text-anchor", "middle");
 
-    mapContainer.attr("transform", "scale(8) translate(20, 5)")
+    
+    var mapWidth = d3.select('#map-container').node().getBoundingClientRect().width;
+    mapContainer.attr("transform", "translate(" + (width-mapWidth) / 2 + ", 50)")
 
     // #endregion
 
-    // #region UPDATE MAP FUNCTION
+    // #region UPDATE MAP
     function updateMap(inputYear, colorFilter) {
         currYear = (inputYear - 2000) / 2; // update currYear based on inputYear
         currColorFilter = colorFilter;
@@ -542,13 +525,14 @@ Promise.all([
 
     function colorSelect(newColor) {
         d3.select("#option-" + colorSelected).attr("opacity", 1);
-        console.log("selected option " + colorSelected)
+        d3.select("#check-" + colorSelected).attr("opacity", 0.7);
         colorSelected = newColor;
         updateMap(2000 + currYear * 2, newColor);
     }
 
     function colorDeSelect(newColor) {
         d3.select("#option-" + colorSelected).attr("opacity", 0.4);
+        d3.select("#check-" + colorSelected).attr("opacity", 0);
         colorSelected = newColor;
         updateMap(2000 + currYear * 2, newColor);
     }
@@ -564,6 +548,7 @@ Promise.all([
                     return;
                 } else {
                     colorOptions.attr("opacity", 1)
+                    checkMarks.attr("opacity", 0.7);
                     updateMap(2000 + currYear * 2, "OSA")
                     currColorFilter = "OSA";
                 }
@@ -580,10 +565,12 @@ Promise.all([
                     colorDeSelect("S");
                 } else if (currColorFilter == "SA") {
                     colorSelect("OSA");
-                    colorOptions.attr("opacity", 1)
+                    colorOptions.attr("opacity", 1);
+                    checkMarks.attr("opacity", 0.7);
                     currColorFilter = "OSA";
                 } else if (currColorFilter == "OSA") {
-                    colorOptions.attr("opacity", 0.4)
+                    colorOptions.attr("opacity", 0.4);
+                    checkMarks.attr("opacity", 0);
                     colorSelect("O");
                 }
             } else if (i == "A") {
@@ -596,13 +583,15 @@ Promise.all([
                 } else if (currColorFilter == "OA") {
                     colorDeSelect("O");
                 } else if (currColorFilter == "OS") {
-                    colorOptions.attr("opacity", 1)
-                    updateMap(2000 + currYear * 2, "OSA")
+                    colorOptions.attr("opacity", 1);
+                    checkMarks.attr("opacity", 0.7);
+                    updateMap(2000 + currYear * 2, "OSA");
                     currColorFilter = "OSA";
                 } else if (currColorFilter == "SA") {
                     colorDeSelect("S");
                 } else if (currColorFilter == "OSA") {
-                    colorOptions.attr("opacity", 0.4)
+                    colorOptions.attr("opacity", 0.4);
+                    checkMarks.attr("opacity", 0);
                     colorSelect("A");
                 }
             } else if (i == "S") {
@@ -614,6 +603,7 @@ Promise.all([
                     return;
                 } else if (currColorFilter == "OA") {
                     colorOptions.attr("opacity", 1)
+                    checkMarks.attr("opacity", 0.7);
                     updateMap(2000 + currYear * 2, "OSA")
                     currColorFilter = "OSA";
                 } else if (currColorFilter == "OS") {
@@ -621,7 +611,8 @@ Promise.all([
                 } else if (currColorFilter == "SA") {
                     colorDeSelect("A")
                 } else if (currColorFilter == "OSA") {
-                    colorOptions.attr("opacity", 0.4)
+                    colorOptions.attr("opacity", 0.4);
+                    checkMarks.attr("opacity", 0);
                     colorSelect("S");
                 }
             } 
@@ -634,41 +625,16 @@ Promise.all([
         .attr("opacity", 1)
 
     // initialize map
-    updateMap(2000 + currYear * 2, "OSA");
-    currColorFilter = "OSA";
+    updateMap(2000, "OSA");
 
     // #endregion
 
-    // #region TOOLTIP
-    var toolTip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    map
-        .on("mouseover", function(e, d) {
-            d3.select(this)
-                .attr("stroke-width", 2.2);
-            toolTip.style("opacity", 1)
-
-        })
-        .on("mouseout", function(d) {
-            d3.select(this)
-                .attr("stroke-width", 1);
-            toolTip.style("opacity", 0);
-        })
-        .on("mousemove", function(e, d) {
-            toolTip
-                .html(d.name)
-                .style("left", (d3.pointer(e)[0]+100) + "px")
-                .style("top", (d3.pointer(e)[1]+100) + "px")
-        });
-
-    // #endregion
 
     // #region YEAR TIMELINE BUTTON FUNCTIONS
-    function initMidtermYears () {
-        midtermYears
+    // initialize year button behavior
+    function initYearOptions(type) {
+        d3.selectAll("." + type)
+            .attr("opacity", 1)
             .on("click", function(e,d) {
                 timer.stop()
                 playing = false;
@@ -697,113 +663,82 @@ Promise.all([
                 d3.select(this)
                     .style("stroke-width", 0);
             });
+        
+        d3.selectAll("." + type + "-label")
+            .attr("opacity", 1);
     }
 
-    function initPresidentialYears () {
-        presidentialYears
-            .on("click", function(e, d) {
-                timer.stop()
-                playing = false;
-                updateMap(d.year, currColorFilter)
+    initYearOptions("presidential");
+    initYearOptions("midterm");
 
-                d3.select(this)
-                    .style("fill", "#243a76")
-
-                d3.select("#play")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
-
-                d3.select("#pause")
-                    .transition()
-                    .duration(500)
-                    .attr("fill", "#bebebe");
+    function disableYearOptions(type) {
+        d3.selectAll("." + type)
+            .attr("opacity", 0.1)
+            .on("click", function() {
+                return;
             })
-            .on("mouseover", function(e, d) {
-                d3.select(this)
-                    .style("stroke", "#243a76")
-                    .style("stroke-width", 1.2)
-                    .style("cursor", "pointer");
+            .on("mouseover", function() {
+                return;
             })
-            .on("mouseout", function(event, d) {
-                d3.select(this)
-                    .style("stroke-width", 0);
+            .on("mouseout",function() {
+                return;
             });
-    }
 
-    initMidtermYears();
-    initPresidentialYears();
+        d3.selectAll("." + type + "-label")
+            .attr("opacity", 0.1);
+    }
 
     // #endregion
 
     // #region SELECTION BEHAVIOR
-    function selectionBehavior(year, opacity1, opacity2) {
-        currYear = (year - 2000) / 2;
-        timer.stop();
-        updateMap(year, currColorFilter);
-
-        presidentialLabels.attr("opacity", opacity1)
-        presidentialYears.attr("opacity", opacity1)
-        midtermLabels.attr("opacity", opacity2)
-        midtermYears.attr("opacity", opacity2)
-    }
-
     selections
         .on("click", function(e, d, i) {
-            yearSelect = d.index;
-            selections.attr("opacity", 0); // dropdown options not visible
-            selectionsText.attr("opacity", 0); // dropdown text not visible
+            selections.attr("opacity", 0);
+            selectionsText.attr("opacity", 0);
             selectionBarSelected = false;
-            
-            selectionBarText.text(d.option); // update selected text
+            selectionBarText.text(d.option);
+            selectionTri.attr("fill", "#dbdbdb");
+            selections.style("cursor", "default");
+
+            timer.stop();
+            playButton
+                .transition()
+                .duration(500)
+                .attr("fill", "#bebebe");
+
+            yearSelect = d.index;
 
             if (yearSelect == 1) { // midterm
-                yearRect // update year rectangle
-                    .attr("x", xScale(2002))
-                    .attr("width", xScale(2026) - xScale(2002))
+            yearRect // update year rectangle
+                .attr("x", xScale(2002))
+                .attr("width", xScale(2026) - xScale(2002))
 
-                selectionBehavior(2002, 0.1, 1);
-                initMidtermYears();
-
-                presidentialYears
-                    .on("click", function() {
-                        return;
-                    })
-                    .on("mouseover", function() {
-                        return;
-                    })
-                    .on("mouseout",function() {
-                        return;
-                    });
+            initYearOptions("midterm");
+            disableYearOptions("presidential");
+            updateMap(2002, currColorFilter);
 
         } else if (yearSelect == 2) { // presidental
             yearRect
                 .attr("x", xScale(2000))
-                .attr("width", xScale(2024) - xScale(2000))
-            selectionBehavior(2000, 1, 0.1);
-            initPresidentialYears();
-            midtermYears
-                .on("click", function() {
-                    return;
-                })
-                .on("mouseover", function() {
-                    return;
-                })
-                .on("mouseout",function() {
-                    return;
-                });
+                .attr("width", xScale(2024) - xScale(2000));
+
+            initYearOptions("presidential");
+            disableYearOptions("midterm");
+            updateMap(2000, currColorFilter);
 
         } else if (yearSelect == 0) { // all
             yearRect
                 .attr("x", xScale(2000))
-                .attr("width", xScale(2026) - xScale(2000))
+                .attr("width", xScale(2026) - xScale(2000));
 
-            selectionBehavior(2000, 1, 1);
-            initPresidentialYears();
-            initMidtermYears();
+            initYearOptions("presidential");
+            initYearOptions("midterm");
+            updateMap(2000, currColorFilter);
         }
     })
 
     // #endregion
+
+    d3.selectAll("text").style("pointer-events", "none");
 });
 
