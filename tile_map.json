@@ -2,7 +2,7 @@
     {"name": "Alabama", "abb": "AL", "x": 37, "y": 47},
     {"name": "Alaska", "abb": "AK", "x":  0, "y": 7},  
     {"name": "Arizona", "abb": "AZ", "x": 13, "y": 40},  
-    {"name": "Arkansas", "abb": "AS", "x": 31, "y": 40},  
+    {"name": "Arkansas", "abb": "AR", "x": 31, "y": 40},  
     {"name": "California", "abb": "CA", "x": 7, "y": 33},  
     {"name": "Colorado", "abb": "CO", "x": 19, "y": 33},  
     {"name": "Connecticut", "abb": "CT", "x": 61, "y":  19},  

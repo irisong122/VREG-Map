@@ -20,7 +20,7 @@ var yearList = [
 ]
 
 var width = 666;
-var height = 600;
+var height = 650;
 
 var margin = {
     left: 20,
