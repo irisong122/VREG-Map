@@ -43,12 +43,14 @@ var xScale = d3.scaleLinear()
     .domain([2000, 2026])
     .range([65, width-margin.right]);
 
+// scale for the tile
 var colorScale = d3.scaleOrdinal()
     .domain(["N", "S", "O", "A", "OS", "OA", "SA", "OSA"])
     .range(["#bebebe", "#bebebe", "#bebebe", "#bebebe",
         "#bebebe", "#bebebe", "#bebebe", "#bebebe"
     ])
 
+// scale for the pattern
 var colorScalePatt = d3.scaleOrdinal()
     .domain(["N", "S", "O", "A", "OS", "OA", "SA", "OSA"])
     .range(["#bebebe", "#bebebe", "#bebebe", "#bebebe",
@@ -174,6 +176,7 @@ var selectionBarText = selectionContainer.append("text")
     .attr("y", 82)
     .attr("font-size", "14px");
 
+// drop down options
 var selectionOptions = selectionContainer.append("g")
     .attr("id", "selection-options")
 
@@ -189,7 +192,10 @@ var selections = selectionOptions
         .attr("fill", "#ebebeb")
         .attr("opacity", 0)
     .on("mouseover", function() {
-        if (selectionBarSelected) {
+        if (!selectionBarSelected) {
+            d3.select(this)
+                .style("cursor", "default");
+        } else if (selectionBarSelected) {
             d3.select(this)
                 .style("stroke", "#243a76")
                 .style("stroke-width", 0.7)
@@ -220,6 +226,7 @@ var selectionsText = selectionOptions
 var colorSelection = svg.append("g")
     .attr("id", "color-selection")
 
+// policy selections
 var colorOptions = colorSelection.selectAll("rect")
     .data(["OSA", "O", "A", "S"])
     .enter()
@@ -316,6 +323,7 @@ var yearLabels = yearTimeline
 // #endregion
     
 // #region PLAY AND PAUSE BUTTON
+
 // play button
 var playButton = svg.append("g")
     .attr("id", "play-button")
@@ -372,6 +380,7 @@ Promise.all([
     var mapContainer = svg.append("g")
         .attr("id", "map-container")
 
+    // scale variable
     var mapSize = 8;
 
     var map = mapContainer.append("g")
@@ -394,11 +403,11 @@ Promise.all([
         .append("path")
             .attr("d", "M 0 0 L 5 5 L 0 5 L 0 0")
             .attr("id", d => "tri-" + d.abb)
-            .attr("transform", d => "translate(" + d.x * mapSize + ", " + d.y * mapSize + ") scale(" + mapSize + ")")
+            .attr("transform", d => "translate(" + (d.x * mapSize) + ", " + (d.y * mapSize) + ") scale(" + mapSize + ")")
             .style("fill", "#bebebe");
 
-
-    var mapAbb = mapContainer.append("g")
+    // state abbreviations for tiles
+    mapContainer.append("g")
         .attr("id", "map-abb")
         .selectAll("text")
         .data(tileMap.states)
@@ -411,7 +420,7 @@ Promise.all([
             .attr("font-size", "14px")
             .attr("text-anchor", "middle");
 
-    
+    // centering the map
     var mapWidth = d3.select('#map-container').node().getBoundingClientRect().width;
     mapContainer.attr("transform", "translate(" + (width-mapWidth) / 2 + ", 50)")
 
@@ -436,9 +445,12 @@ Promise.all([
                 }
             }
         }
+
+        // update color scale based on the selected policy
         updateColorScale(currColorFilter);
         updateColorScalePatt(currColorFilter);
 
+        // update tiles and pattern
         map
             .transition()
             .duration(750)
@@ -693,13 +705,23 @@ Promise.all([
     // #region SELECTION BEHAVIOR
     selections
         .on("click", function(e, d, i) {
+            if (!selectionBarSelected) {
+                return;
+            }
+
+            // update selections
             selections.attr("opacity", 0);
             selectionsText.attr("opacity", 0);
-            selectionBarSelected = false;
-            selectionBarText.text(d.option);
-            selectionTri.attr("fill", "#dbdbdb");
             selections.style("cursor", "default");
 
+            // update selection bar
+            selectionBarSelected = false;
+            selectionBarText.text(d.option);
+
+            // update arrow
+            selectionTri.attr("fill", "#dbdbdb");
+
+            // reset timer
             timer.stop();
             playButton
                 .transition()
