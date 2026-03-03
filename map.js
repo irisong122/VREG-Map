@@ -20,7 +20,7 @@ var yearList = [
 ]
 
 var width = 666;
-var height = 650;
+var height = 550;
 
 var margin = {
     left: 20,
@@ -35,9 +35,14 @@ var svg = d3.select("#main")
 // #endregion
 
 // #region SCALES AND COLOR
+var policyScale = d3.scaleOrdinal()
+    .domain(["OVR", "SDR", "AVR", "None"])
+    .range(["Online voter registration", "Same-day voter registration",
+        "Automatic voter registration", "No innovative voter registration methods"])
+
 var colorScaleMain = d3.scaleOrdinal()
     .domain(["OSA", "O", "A", "S"])
-    .range(["#3b9171", "#efc55b", "#6c8cc7", "#9a53b7"])
+    .range(["#3b9171", "#efc55b", "#ef7f4d", "#9a53b7"])
 
 var xScale = d3.scaleLinear()
     .domain([2000, 2026])
@@ -67,24 +72,24 @@ function updateColorScale(filter) {
             "#efc55b", "#efc55b", "#bebebe", "#efc55b"
         ])
     } else if (filter == "A") {
-        colorScale.range(["#bebebe", "#bebebe", "#bebebe", "#6c8cc7",
-            "#bebebe", "#6c8cc7", "#6c8cc7", "#6c8cc7"
+        colorScale.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
+            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
         ])
     } else if (filter == "OS") {
         colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
             "#efc55b", "#efc55b", "#9a53b7", "#efc55b"
         ])
     } else if (filter == "OA") {
-        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#6c8cc7",
-            "#efc55b", "#efc55b", "#6c8cc7", "#efc55b"
+        colorScale.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
+            "#efc55b", "#efc55b", "#ef7f4d", "#efc55b"
         ])
     } else if (filter == "SA") {
-        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#6c8cc7",
-            "#9a53b7", "#6c8cc7", "#6c8cc7", "#6c8cc7"
+        colorScale.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#ef7f4d", "#ef7f4d"
         ])
     } else if (filter == "OSA") {
-        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#6c8cc7",
-            "#efc55b", "#efc55b", "#6c8cc7", "#3b9171"
+        colorScale.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
+            "#efc55b", "#efc55b", "#ef7f4d", "#3b9171"
         ])
     }
 }
@@ -99,24 +104,24 @@ function updateColorScalePatt(filter) {
             "#efc55b", "#efc55b", "#bebebe", "#efc55b"
         ])
     } else if (filter == "A") {
-        colorScalePatt.range(["#bebebe", "#bebebe", "#bebebe", "#6c8cc7",
-            "#bebebe", "#6c8cc7", "#6c8cc7", "#6c8cc7"
+        colorScalePatt.range(["#bebebe", "#bebebe", "#bebebe", "#ef7f4d",
+            "#bebebe", "#ef7f4d", "#ef7f4d", "#ef7f4d"
         ])
     } else if (filter == "OS") {
         colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#bebebe",
             "#9a53b7", "#efc55b", "#9a53b7", "#9a53b7"
         ])
     } else if (filter == "OA") {
-        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#6c8cc7",
-            "#efc55b", "#6c8cc7", "#6c8cc7", "#6c8cc7"
+        colorScalePatt.range(["#bebebe", "#bebebe", "#efc55b", "#ef7f4d",
+            "#efc55b", "#ef7f4d", "#ef7f4d", "#ef7f4d"
         ])
     } else if (filter == "SA") {
-        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#6c8cc7",
-            "#9a53b7", "#6c8cc7", "#9a53b7", "#9a53b7"
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#9a53b7", "#9a53b7"
         ])
     } else if (filter == "OSA") {
-        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#6c8cc7",
-            "#9a53b7", "#6c8cc7", "#9a53b7", "#3b9171"
+        colorScalePatt.range(["#bebebe", "#9a53b7", "#efc55b", "#ef7f4d",
+            "#9a53b7", "#ef7f4d", "#9a53b7", "#3b9171"
         ])
     }
 }
@@ -226,6 +231,13 @@ var selectionsText = selectionOptions
 var colorSelection = svg.append("g")
     .attr("id", "color-selection")
 
+// text to tell readers to click
+colorSelection.append("text")
+    .text("Click to filter by policy")
+    .attr("x", 475)
+    .attr("y", 400)
+    .attr("font-size", "13pt")
+
 // policy selections
 var colorOptions = colorSelection.selectAll("rect")
     .data(["OSA", "O", "A", "S"])
@@ -235,7 +247,7 @@ var colorOptions = colorSelection.selectAll("rect")
         .attr("width", 20)
         .attr("height", 20)
         .attr("x", 475)
-        .attr("y", (d, i) => i * 30 + 400)
+        .attr("y", (d, i) => i * 30 + 415)
         .attr("fill", (d, i) => colorScaleMain(d))
         .attr("opacity", 0.4)
     .on("mouseover", function() {
@@ -256,16 +268,19 @@ var checkMarks = colorSelection.selectAll("path")
         .attr("d", "M 6 7 L 7 6 L 10 9 L 17 1 L 18 2 L 10 11 L 6 7")
         .attr("fill", "#555555")
         .attr("opacity", 0.7)
-        .attr("transform", (d, i) => "translate(467," + (i * 30 + 395) + ") scale(1.8)")
+        .attr("transform", (d, i) => "translate(467," + (i * 30 + 410) + ") scale(1.8)")
         .style("pointer-events", "none");
 
-var colorOptionsText = colorSelection.selectAll("text")
+var colorOptionsText = colorSelection
+    .append("g")
+    .attr("id", "color-text")
+    .selectAll("text")
     .data(["All Methods", "Online Voter Registration",
          "Automatic Voter Registration", "Same Day Registration"])
     .enter()
     .append("text")
     .attr("x", 500)
-    .attr("y", (d, i) => i * 30 + 415)
+    .attr("y", (d, i) => i * 30 + 430)
     .text(d => d)
     .attr("font-size", "10pt")
 
@@ -364,6 +379,30 @@ var pauseButton = svg.append("g")
 
 // #endregion
 
+    // #region TEXT
+
+    var yearText = d3.select("#main")
+        .append("div")
+        .attr("id", "year-text")
+        .style("width", "666px")
+
+
+    var policies = yearText.append("div")
+        .attr("id", "policies-text")
+        
+    var policiesHeader = policies.append("h4")
+
+    policies = policies.append("ul")
+
+    var combinations = yearText.append("div")
+        .attr("id", "combo-text")
+
+    var comboHeader = combinations.append("h4")
+
+    combinations = combinations.append("ul")
+
+    // #endregion
+
 // keeps track of the current year selected
 let currYear = 0;
 let yearSelect = 0;
@@ -373,8 +412,10 @@ let currColorFilter;
 // load data
 Promise.all([
     d3.csv("VREG-data.csv"),
-    d3.json("tile_map.json")
-]).then(function([data, tileMap]) {
+    d3.json("tile_map.json"),
+    d3.json("policy_text.json"),
+    d3.json("combo_text.json")
+]).then(function([data, tileMap, policyText, comboText]) {
 
     // #region MAP SETUP
     var mapContainer = svg.append("g")
@@ -471,6 +512,77 @@ Promise.all([
             .transition()
             .duration(500)
             .style("fill", "#243a76")
+
+        // update text
+        policiesHeader
+            .text("Innovative Registration Policies in the " + inputYear + " General Election");
+
+        d3.selectAll("li").remove()
+
+        var policyBullets = policies
+            .selectAll("li")
+            .data(policyText.policy[currYear])
+            .enter()
+            .append("li")
+                .text(d => policyScale(d.type) + ": ")
+
+        policyBullets
+            .append("span")
+                .style("font-weight", "bold")
+                .text(d => d.maintext + " ")
+
+        policyBullets.each(function(d) {
+            if (d.change != null) {
+                d3.select(this)
+                    .append("span")
+                    .text("(" + d.change + ")")
+            }
+
+            var currList = d3.select(this)
+                    .append("ul")
+
+            if (d.implemented != null) {
+                currList
+                    .append("li")
+                    .text("Implemented " + d.type + ": " + d.implemented);
+            }
+
+            if (d.ended != null) {
+                currList
+                    .append("li")
+                    .text("Ended " + d.type + ": " + d.ended)
+            }
+        })
+
+        comboHeader
+            .text("Innovative Registration Policy Combinations in the " + inputYear + " General Election")
+
+        var comboBullets = combinations
+            .selectAll("li")
+            .data(comboText.combo[currYear])
+            .enter()
+            .append("li")
+                .text(d => d.type + ": ")
+
+        comboBullets
+            .append("span")
+                .style("font-weight", "bold")
+                .text(d => d.maintext + " ")
+
+        comboBullets.each(function(d) {
+            if (d.change != null) {
+                d3.select(this)
+                    .append("span")
+                    .text("(" + d.change + ")")
+            }
+        })
+
+        
+        d3.selectAll("h4")
+            .style("font-size", "1.25rem")
+
+        d3.selectAll("li")
+            .style("font-size", "1.25rem")
     }
 
     // #endregion
@@ -762,5 +874,6 @@ Promise.all([
     // #endregion
 
     d3.selectAll("text").style("pointer-events", "none");
+
 });
 

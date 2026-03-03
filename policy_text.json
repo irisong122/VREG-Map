@@ -1,0 +1,86 @@
+{"policy": [
+    [
+        {"type": "OVR", "maintext": "0 states", "change": null, "implemented": null, "ended": null},
+        {"type": "SDR", "maintext": "7 states", "change": null, "implemented": "Idaho, Maine, Minnesota, New Hampshire, North Dakota, Wisconsin, and Wyoming", "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": null, "implemented": null, "ended": null},
+        {"type": "None", "maintext": "43 states & D.C.", "change": null, "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "1 state", "change": "increase of 1 state from 2000", "implemented": "Arizona", "ended": null},
+        {"type": "SDR", "maintext": "0 states", "change": null, "implemented": null, "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": null, "implemented": null, "ended": null},
+        {"type": "None", "maintext": "0 states", "change": null, "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "1 state", "change": "no change from 2002", "implemented": null, "ended": null},
+        {"type": "SDR", "maintext": "7 states", "change": "no change from 2002", "implemented": null, "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2002", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "42 states & D.C.", "change": "no change from 2002", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "1 state", "change": "no change from 2004", "implemented": null, "ended": null},
+        {"type": "SDR", "maintext": "10 states", "change": "increase of 3 states from 2004", "implemented": "Illinois, Montana, and Ohio", "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2004", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "39 states & D.C.", "change": "decrease of 3 states from 2004", "implemented": null, "ended": null}
+    ],
+        [
+        {"type": "OVR", "maintext": "2 states", "change": "increase of 1 state from 2006", "implemented": "Washington", "ended": null},
+        {"type": "SDR", "maintext": "12 states", "change": "increase of 2 states from 2006", "implemented": "Iowa and North Carolina", "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2006", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "46 states & D.C.", "change": "decrease of 3 states from 2006", "implemented": null, "ended": null}
+    ],
+        [
+        {"type": "OVR", "maintext": "8 states", "change": "increase of 6 states from 2008", "implemented": "Colorado, Indiana, Kansas, Louisiana, Oregon, and Utah", "ended": null},
+        {"type": "SDR", "maintext": "12 states & D.C.", "change": "increase of 1 jurisdiction from 2008", "implemented": "Washington, D.C.", "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2008", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "30 states", "change": "decrease of 6 states & D.C. from 2008", "implemented": null, "ended": null}
+    ],
+        [
+        {"type": "OVR", "maintext": "12 states", "change": "increase of 4 states from 2010", "implemented": "California, Maryland, Nevada, and South Carolina", "ended": null},
+        {"type": "SDR", "maintext": "12 states & D.C.", "change": "no change from 2010", "implemented": null, "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2010", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "26 states", "change": "decrease of 4 states from 2010", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "19 states", "change": "increase of 7 states from 2012", "implemented": "Connecticut, Delaware, Georgia, Illinois, Minnesota, Missouri", "ended": null},
+        {"type": "SDR", "maintext": "12 states", "change": "increase of 2 states & decrease of 2 states from 2012", "implemented": "Colorado and Connecticut", "ended": "North Carolina and Ohio"},
+        {"type": "AVR", "maintext": "0 states", "change": "no change from 2012", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "23 states", "change": "decrease of 3 states from 2012", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "31 states & D.C.", "change": "increase of 12 states & D.C. from 2014", "implemented": "Alabama, Alaska, Hawaii, Iowa, Kentucky, Massachusetts, Nebraska, New Mexico, Pennsylvania, Rhode Island, Vermont, West Virginia, and Washington, D.C.", "ended": null},
+        {"type": "SDR", "maintext": "15 states & D.C.", "change": "increase of 3 states from 2014", "implemented": "Hawaii, Maryland, and North Carolina", "ended": null},
+        {"type": "AVR", "maintext": "3 states", "change": "increase of 3 states from 2014", "implemented": "Connecticut, Georgia, and Oregon", "ended": null},
+        {"type": "None", "maintext": "0 states", "change": "decrease of 12 states from 2014", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "36 states & D.C.", "change": "increase of 5 states from 2016", "implemented": "Florida, Idaho, Ohio, Tennessee, and Wisconsin", "ended": null},
+        {"type": "SDR", "maintext": "18 states & D.C.", "change": "increase of 3 states from 2016", "implemented": "California, Utah, and Vermont", "ended": null},
+        {"type": "AVR", "maintext": "0 states", "change": "increase of 7 states & D.C. from 2016", "implemented": "Alaska, California, Colorado, Illinois, New Jersey, Rhode Island, Vermont, and Washington, D.C.", "ended": null},
+        {"type": "None", "maintext": "7 states", "change": "decrease of 4 states from 2016", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "39 states & D.C.", "change": "increase of 3 states from 2018", "implemented": "Michigan, New Jersey, and North Carolina", "ended": null},
+        {"type": "SDR", "maintext": "22 states & D.C.", "change": "increase of 4 states from 2018", "implemented": "Michigan, Nevada, New Mexico, and Washington", "ended": null},
+        {"type": "AVR", "maintext": "17 states & D.C.", "change": "increase of 7 states from 2018", "implemented": "Maryland, Massachusetts, Michigan, Nevada, New Mexico, Virginia, and Washington", "ended": null},
+        {"type": "None", "maintext": "6 states", "change": "decrease of 1 state from 2018", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "39 states & D.C.", "change": "no change from 2020", "implemented": null, "ended": null},
+        {"type": "SDR", "maintext": "23 states & D.C.", "change": "increase of 1 state from 2020", "implemented": "Virginia", "ended": null},
+        {"type": "AVR", "maintext": "20 states & D.C.", "change": "increase of 3 states from 2020", "implemented": "Hawaii, Maine, and West Virginia", "ended": null},
+        {"type": "None", "maintext": "6 states", "change": "no change from 2020", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "42 states & D.C.", "change": "increase of 3 states from 2022", "implemented": "Maine, New York, and Oklahoma", "ended": null},
+        {"type": "SDR", "maintext": "24 states & D.C.", "change": "increase of 1 state", "implemented": "New York", "ended": null},
+        {"type": "AVR", "maintext": "23 states & D.C.", "change": "increase of 3 states from 2022", "implemented": "Delaware, Minnesota, and Pennsylvania", "ended": null},
+        {"type": "None", "maintext": "4 states", "change": "decrease of 2 states from 2022", "implemented": null, "ended": null}
+    ],
+    [
+        {"type": "OVR", "maintext": "42 states & D.C.", "change": "no change from 2024", "implemented": null, "ended": null},
+        {"type": "SDR", "maintext": "24 states & D.C.", "change": "no change from 2024", "implemented": null, "ended": null},
+        {"type": "AVR", "maintext": "23 states & D.C.", "change": "no change from 2024", "implemented": null, "ended": null},
+        {"type": "None", "maintext": "4 states", "change": "no change from 2024", "implemented": null, "ended": null}
+    ]
+]}

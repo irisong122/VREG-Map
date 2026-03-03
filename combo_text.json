@@ -1,0 +1,86 @@
+{"combo": [
+    [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": null},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": null},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": null},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": null}
+    ],
+    [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2000"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2000"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2000"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2000"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2002"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2002"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2002"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2002"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2004"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2004"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2004"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2004"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2006"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2006"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2006"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2006"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2008"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2008"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2008"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2008"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "0 states", "change": "no change from 2010"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2010"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2010"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2010"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "4 states", "change": "net increase of 4 states from 2012"},
+        {"type": "OVR+AVR", "maintext": "0 states", "change": "no change from 2012"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2012"},
+        {"type": "OVR+SDR+AVR", "maintext": "0 states", "change": "no change from 2012"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "6 states & D.C.", "change": "increase of 2 states & D.C. from 2014"},
+        {"type": "OVR+AVR", "maintext": "2 states", "change": "increase of 2 states from 2014"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2014"},
+        {"type": "OVR+SDR+AVR", "maintext": "1 state", "change": "increase of 1 state from 2014"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "7 states", "change": "net increase of 1 state from 2016"},
+        {"type": "OVR+AVR", "maintext": "4 states", "change": "net increase of 2 states from 2016"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2016"},
+        {"type": "OVR+SDR+AVR", "maintext": "5 states & D.C.", "change": "net increase of 4 states & D.C. from 2016"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "7 states", "change": "no change from 2018"},
+        {"type": "OVR+AVR", "maintext": "7 states", "change": "net increase of 3 states from 2018"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2018"},
+        {"type": "OVR+SDR+AVR", "maintext": "10 states & D.C.", "change": "net increase of 5 states from 2018"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "6 states", "change": "net decrease of 1 state from 2020"},
+        {"type": "OVR+AVR", "maintext": "7 states", "change": "no change from 2020"},
+        {"type": "AVR+SDR", "maintext": "1 state", "change": "net increase of 1 state from 2020"},
+        {"type": "OVR+SDR+AVR", "maintext": "12 states & D.C.", "change": "net increase of 2 states from 2020"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "6 states", "change": "no change from 2022"},
+        {"type": "OVR+AVR", "maintext": "9 states", "change": "net increase of 2 states from 2022"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "net decrease of 1 state from 2022"},
+        {"type": "OVR+SDR+AVR", "maintext": "14 states & D.C.", "change": "net increase of 2 states from 2022"}
+    ],
+        [
+        {"type": "OVR+SDR", "maintext": "6 states", "change": "no change from 2024"},
+        {"type": "OVR+AVR", "maintext": "9 states", "change": "no change from 2024"},
+        {"type": "AVR+SDR", "maintext": "0 states", "change": "no change from 2024"},
+        {"type": "OVR+SDR+AVR", "maintext": "14 states & D.C.", "change": "no change from 2024"}
+    ]
+]}

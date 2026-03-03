@@ -3,6 +3,12 @@ body {
     text-align: center;
 }
 
+#year-text {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 
 
