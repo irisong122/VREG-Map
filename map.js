@@ -94,6 +94,7 @@ function updateColorScale(filter) {
     }
 }
 
+
 function updateColorScalePatt(filter) {
     if (filter == "S") {
         colorScalePatt.range(["#bebebe", "#9a53b7", "#bebebe", "#bebebe",
@@ -459,7 +460,8 @@ Promise.all([
             .attr("y", d => d.y * mapSize + 25)
             .attr("fill", "black")
             .attr("font-size", "14px")
-            .attr("text-anchor", "middle");
+            .attr("text-anchor", "middle")
+            .style("font-weight", "bold");
 
     // centering the map
     var mapWidth = d3.select('#map-container').node().getBoundingClientRect().width;
