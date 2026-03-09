@@ -1,5 +1,13 @@
 // #region SETUP
-d3.select("#main")
+d3.select("body")
+    .append("div")
+    .attr("id", "vreg-map")
+    .style("display", "flex")
+    .style("justify-content", "center")
+    .style("align-items", "center")
+    .style("flex-direction", "column")
+
+d3.select("#vreg-map")
     .append("h1")
     .text("Availability of Innovative Voter Registration Methods, 2000-2026")
 
@@ -27,7 +35,7 @@ var margin = {
     right: 20
 }
 
-var svg = d3.select("#main")
+var svg = d3.select("#vreg-map")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
@@ -388,13 +396,11 @@ var pauseButton = svg.append("g")
 
 // #region TEXT
 
-    var yearText = d3.select("#main")
+    var yearText = d3.select("#vreg-map")
         .append("div")
         .attr("id", "year-text")
-        .style("width", "666px")
-        .style("text-align", "left")
-        .style("margin-left", "auto")
-        .style("margin-right", "auto");
+        .style("max-width", "666px")
+        .style("text-align", "left");
 
     var yearHeader = yearText.append("div")
         .attr("id", "year-header")
@@ -416,28 +422,6 @@ var pauseButton = svg.append("g")
     combinations = combinations.append("ul");
 
 
-
-// #endregion
-
-// #region LEGEND PATTERN
-var defs = svg.append("defs");
-
-// Define the pattern
-// defs.append("pattern")
-//     .attr("id", "diagonal-stripe")
-//     .attr("patternUnits", "userSpaceOnUse")
-//     .attr("width", 1)
-//     .attr("height", 1)
-//     .append("path")
-//     .attr("d", "M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2")
-//     .attr("stroke", "#000")
-//     .attr("stroke-width", 2);
-
-// // Use the pattern
-// svg.append("rect")
-//     .attr("width", "100%")
-//     .attr("height", "100%")
-//     .style("fill", "url(#diagonal-stripe)");
 
 // #endregion
 
