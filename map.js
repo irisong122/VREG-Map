@@ -40,6 +40,12 @@ var policyScale = d3.scaleOrdinal()
     .range(["Online voter registration", "Same-day voter registration",
         "Automatic voter registration", "No innovative voter registration methods"])
 
+var listScale = d3.scaleOrdinal()
+    .domain(["None", "OVR", "AVR", "SDR", "OVR+AVR", "OVR+SDR", "AVR+SDR", "OVR+SDR+AVR"])
+    .range(["images/None.png", "images/OVR.png", "images/AVR.png", "images/SDR.png",
+        "images/OVR+AVR.png", "images/OVR+SDR.png", "images/AVR+SDR.png", "images/All.png"
+    ])
+
 var colorScaleMain = d3.scaleOrdinal()
     .domain(["OSA", "O", "A", "S"])
     .range(["#3b9171", "#efc55b", "#ef7f4d", "#9a53b7"])
@@ -380,29 +386,60 @@ var pauseButton = svg.append("g")
 
 // #endregion
 
-    // #region TEXT
+// #region TEXT
 
     var yearText = d3.select("#main")
         .append("div")
         .attr("id", "year-text")
         .style("width", "666px")
+        .style("text-align", "left")
+        .style("margin-left", "auto")
+        .style("margin-right", "auto");
 
-
-    var policies = yearText.append("div")
-        .attr("id", "policies-text")
+    var yearHeader = yearText.append("div")
+        .attr("id", "year-header")
+        .append("h2")
+        .style("text-align", "center");
         
-    var policiesHeader = policies.append("h4")
+    var policies = yearText.append("div")
+        .attr("id", "policies-text");
+        
+    var policiesHeader = policies.append("h4");
 
-    policies = policies.append("ul")
+    policies = policies.append("ul");
 
     var combinations = yearText.append("div")
-        .attr("id", "combo-text")
+        .attr("id", "combo-text");
 
-    var comboHeader = combinations.append("h4")
+    var comboHeader = combinations.append("h4");
 
-    combinations = combinations.append("ul")
+    combinations = combinations.append("ul");
 
-    // #endregion
+
+
+// #endregion
+
+// #region LEGEND PATTERN
+var defs = svg.append("defs");
+
+// Define the pattern
+// defs.append("pattern")
+//     .attr("id", "diagonal-stripe")
+//     .attr("patternUnits", "userSpaceOnUse")
+//     .attr("width", 1)
+//     .attr("height", 1)
+//     .append("path")
+//     .attr("d", "M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2")
+//     .attr("stroke", "#000")
+//     .attr("stroke-width", 2);
+
+// // Use the pattern
+// svg.append("rect")
+//     .attr("width", "100%")
+//     .attr("height", "100%")
+//     .style("fill", "url(#diagonal-stripe)");
+
+// #endregion
 
 // keeps track of the current year selected
 let currYear = 0;
@@ -516,8 +553,11 @@ Promise.all([
             .style("fill", "#243a76")
 
         // update text
+        yearHeader
+            .text(inputYear + " General Election")
+
         policiesHeader
-            .text("Innovative Registration Policies in the " + inputYear + " General Election");
+            .text("Innovative Registration Policies");
 
         d3.selectAll("li").remove()
 
@@ -527,6 +567,7 @@ Promise.all([
             .enter()
             .append("li")
                 .text(d => policyScale(d.type) + ": ")
+                .style("list-style-image", d => "url(" + listScale(d.type) + ")");
 
         policyBullets
             .append("span")
@@ -546,7 +587,8 @@ Promise.all([
             if (d.implemented != null) {
                 currList
                     .append("li")
-                    .text("Implemented " + d.type + ": " + d.implemented);
+                    .text("Implemented " + d.type + ": " + d.implemented)
+                    .style("list-style-image", "none");
             }
 
             if (d.ended != null) {
@@ -557,7 +599,7 @@ Promise.all([
         })
 
         comboHeader
-            .text("Innovative Registration Policy Combinations in the " + inputYear + " General Election")
+            .text("Innovative Registration Policy Combinations")
 
         var comboBullets = combinations
             .selectAll("li")
@@ -565,6 +607,7 @@ Promise.all([
             .enter()
             .append("li")
                 .text(d => d.type + ": ")
+                .style("list-style-image", d => "url(" + listScale(d.type) + ")");
 
         comboBullets
             .append("span")
@@ -579,7 +622,6 @@ Promise.all([
             }
         })
 
-        
         d3.selectAll("h4")
             .style("font-size", "1.25rem")
 
