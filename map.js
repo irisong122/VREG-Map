@@ -583,7 +583,7 @@ Promise.all([
         })
 
         comboHeader
-            .text("Innovative Registration Policy Combinations")
+            .text("Combinations of Policies")
 
         var comboBullets = combinations
             .selectAll("li")
