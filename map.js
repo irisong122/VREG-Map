@@ -433,10 +433,10 @@ let currColorFilter;
 
 // load data
 Promise.all([
-    d3.csv("VREG-data.csv"),
-    d3.json("tile_map.json"),
-    d3.json("policy_text.json"),
-    d3.json("combo_text.json")
+    d3.csv("data/VREG-data.csv"),
+    d3.json("data/tile_map.json"),
+    d3.json("data/policy_text.json"),
+    d3.json("data/combo_text.json")
 ]).then(function([data, tileMap, policyText, comboText]) {
 
     // #region MAP SETUP
