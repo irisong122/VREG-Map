@@ -615,10 +615,10 @@ Promise.all([
         })
 
         d3.selectAll("h3")
-            .style("font-size", "1.125rem")
+            .style("font-size", "1.3rem")
 
         d3.selectAll("li")
-            .style("font-size", "1.125rem")
+            .style("font-size", "1.25rem")
 
         d3.selectAll("h2")
             .style("font-size", "1.45rem")
