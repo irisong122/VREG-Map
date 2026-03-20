@@ -1,4 +1,7 @@
 // #region SETUP
+// d3.select("html")
+//     .style("font-size", "22px")
+
 d3.select("body")
     .append("div")
     .attr("id", "vreg-map")
@@ -11,8 +14,9 @@ d3.select("body")
     .style("margin-right", "auto");
 
 d3.select("#vreg-map")
-    .append("h1")
+    .append("h2")
     .text("Availability of Innovative Voter Registration Methods, 2000-2026")
+    .style("text-align", "center");
 
 var yearList = [
     {option: "All Years",
@@ -403,7 +407,6 @@ var pauseButton = svg.append("g")
     var yearText = d3.select("#vreg-map")
         .append("div")
         .attr("id", "year-text")
-        .style("max-width", "666px")
         .style("text-align", "left");
 
     var yearHeader = yearText.append("div")
@@ -414,14 +417,14 @@ var pauseButton = svg.append("g")
     var policies = yearText.append("div")
         .attr("id", "policies-text");
         
-    var policiesHeader = policies.append("h4");
+    var policiesHeader = policies.append("h3");
 
     policies = policies.append("ul");
 
     var combinations = yearText.append("div")
         .attr("id", "combo-text");
 
-    var comboHeader = combinations.append("h4");
+    var comboHeader = combinations.append("h3");
 
     combinations = combinations.append("ul");
 
@@ -490,7 +493,8 @@ Promise.all([
 
     // centering the map
     var mapWidth = d3.select('#map-container').node().getBoundingClientRect().width;
-    mapContainer.attr("transform", "translate(" + (width-mapWidth) / 2 + ", 50)")
+    var containerWidth = d3.select("#vreg-map").node().getBoundingClientRect().width;
+    mapContainer.attr("transform", "translate(" + (containerWidth-mapWidth) / 2 + ", 50)")
 
     // #endregion
 
@@ -610,11 +614,14 @@ Promise.all([
             }
         })
 
-        d3.selectAll("h4")
-            .style("font-size", "1.25rem")
+        d3.selectAll("h3")
+            .style("font-size", "1.125rem")
 
         d3.selectAll("li")
-            .style("font-size", "1.25rem")
+            .style("font-size", "1.125rem")
+
+        d3.selectAll("h2")
+            .style("font-size", "1.45rem")
     }
 
     // #endregion
