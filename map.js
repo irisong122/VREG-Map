@@ -1,14 +1,10 @@
 // #region SETUP
-// d3.select("html")
-//     .style("font-size", "22px")
-
 d3.select("body")
     .append("div")
     .attr("id", "vreg-map")
-    .style("display", "flex")
+    .style("display", "grid")
     .style("justify-content", "center")
     .style("align-items", "center")
-    .style("flex-direction", "column")
     .style("max-width", "666px")
     .style("margin-left", "auto")
     .style("margin-right", "auto");
@@ -45,7 +41,6 @@ var margin = {
 var svg = d3.select("#vreg-map")
   .append("svg")
   .attr("width", "100%")
-  .attr("height", "auto")
   .attr("viewBox", "0 0 675 550");
   
 // #endregion
