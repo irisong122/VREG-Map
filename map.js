@@ -41,8 +41,25 @@ var margin = {
 var svg = d3.select("#vreg-map")
   .append("svg")
   .attr("width", "100%")
-  .attr("viewBox", "0 0 675 550");
+  .attr("viewBox", "0 0 675 750");
   
+// #endregion
+
+// #region DOWNLOAD
+var downloadContainer = svg.append("g")
+    .attr("id", "download-container")
+
+svg.append("g")
+    .attr("id", "download-button")
+    .append("rect")
+    .attr("x", 20)
+    .attr("y", 725)
+    .attr("width", 20)
+    .attr("height", 20)
+    .on("click", function() {
+        saveSvgAsPng(d3.select("#download-container").node(), "chart.png", {scale: 3, backgroundColor: "white"});
+    })
+
 // #endregion
 
 // #region SCALES AND COLOR
@@ -144,6 +161,85 @@ function updateColorScalePatt(filter) {
     }
 }
 
+
+// #endregion
+
+// #region LEGEND
+var legendContainer = downloadContainer.append("g")
+    .attr("id", "legend-container")
+
+var legend = legendContainer.append("g")
+    .attr("id", "legend")
+
+legend
+    .append("g")
+    .selectAll("rect")
+    .data(["OSA", "O"])
+    .enter()
+    .append("rect")
+        .attr("fill", (d, i) => colorScaleMain(d))
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("x", 20)
+        .attr("y", (d, i) => i * 30 + 570)
+
+legend
+    .append("g")
+    .selectAll("rect")
+    .data(["A", "S"])
+    .enter()
+    .append("rect")
+        .attr("fill", (d, i) => colorScaleMain(d))
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("x", 225)
+        .attr("y", (d, i) => i * 30 + 570)
+
+legend.append("g")
+    .attr("id", "legend-text-1")
+    .selectAll("text")
+    .data([
+        {text: "All Methods"},
+        {text: "Online Voter Registration"}
+    ])
+    .enter()
+    .append("text")
+        .attr("x", 45)
+        .attr("y", (d, i) => i * 30 + 585)
+        .attr("font-size", "11pt")
+        .text(d => d.text)
+
+legend.append("g")
+    .attr("id", "legend-text-2")
+    .selectAll("text")
+    .data([
+        {text: "Automatic Voter Registration"},
+        {text: "Same-Day Registration"}
+    ])
+    .enter()
+    .append("text")
+        .attr("x", 250)
+        .attr("y", (d, i) => i * 30 + 585)
+        .attr("font-size", "11pt")
+        .text(d => d.text)
+
+legendContainer.append("text")
+    .attr("id", "source-text")
+    .text("Source: CEIR, \"The Expansion of Innovative Voter Registration Methods, 2000 - 2026\"")
+    .attr("x", 25)
+    .attr("y", 670)
+    .attr("font-size", "10pt")
+    .attr("fill", "#555555")
+
+legendContainer.append("svg:image")
+    .attr("xlink:href", "images/CEIR_Logo_Vertical_OneColor_LightBlue.png")
+    .attr("x", width - 35)
+    .attr("y", 620)
+    .attr("width", 50)
+    .attr("height", 50);
+
+var legendWidth = legend.node().getBoundingClientRect().width;
+legend.attr("transform", "translate(" + ((width-legendWidth) / 2) + ", 0)")
 
 // #endregion
 
@@ -250,11 +346,11 @@ var colorSelection = svg.append("g")
     .attr("id", "color-selection")
 
 // text to tell readers to click
-colorSelection.append("text")
-    .text("Click to filter by policy")
-    .attr("x", 475)
-    .attr("y", 400)
-    .attr("font-size", "13pt")
+// colorSelection.append("text")
+//     .text("Click to filter by policy")
+//     .attr("x", 475)
+//     .attr("y", 400)
+//     .attr("font-size", "13pt")
 
 // policy selections
 var colorOptions = colorSelection.selectAll("rect")
@@ -265,7 +361,7 @@ var colorOptions = colorSelection.selectAll("rect")
         .attr("width", 20)
         .attr("height", 20)
         .attr("x", 475)
-        .attr("y", (d, i) => i * 30 + 415)
+        .attr("y", (d, i) => i * 30 + 412)
         .attr("fill", (d, i) => colorScaleMain(d))
         .attr("opacity", 0.4)
     .on("mouseover", function() {
@@ -278,23 +374,23 @@ var colorOptions = colorSelection.selectAll("rect")
         d3.select(this).attr("stroke-width", 0);
     })
 
-var checkMarks = colorSelection.selectAll("path")
-    .data(["OSA", "O", "A", "S"])
-    .enter()
-    .append("path")
-        .attr("id", d => "check-" + d)
-        .attr("d", "M 6 7 L 7 6 L 10 9 L 17 1 L 18 2 L 10 11 L 6 7")
-        .attr("fill", "#555555")
-        .attr("opacity", 0.7)
-        .attr("transform", (d, i) => "translate(467," + (i * 30 + 410) + ") scale(1.8)")
-        .style("pointer-events", "none");
+// var checkMarks = colorSelection.selectAll("path")
+//     .data(["OSA", "O", "A", "S"])
+//     .enter()
+//     .append("path")
+//         .attr("id", d => "check-" + d)
+//         .attr("d", "M 6 7 L 7 6 L 10 9 L 17 1 L 18 2 L 10 11 L 6 7")
+//         .attr("fill", "#555555")
+//         .attr("opacity", 0.7)
+//         .attr("transform", (d, i) => "translate(467," + (i * 30 + 410) + ") scale(1.8)")
+//         .style("pointer-events", "none");
 
 var colorOptionsText = colorSelection
     .append("g")
     .attr("id", "color-text")
     .selectAll("text")
     .data(["All Methods", "Online Voter Registration",
-         "Automatic Voter Registration", "Same Day Registration"])
+         "Automatic Voter Registration", "Same-Day Registration"])
     .enter()
     .append("text")
     .attr("x", 500)
@@ -442,7 +538,7 @@ Promise.all([
 ]).then(function([data, tileMap, policyText, comboText]) {
 
     // #region MAP SETUP
-    var mapContainer = svg.append("g")
+    var mapContainer = downloadContainer.append("g")
         .attr("id", "map-container")
 
     // scale variable
@@ -486,6 +582,29 @@ Promise.all([
             .attr("text-anchor", "middle")
             .style("font-weight", "bold");
 
+    var mapHeader = downloadContainer.append("g")
+        .attr("id", "map-header")
+        .attr("class", "download")
+        .append("text")
+        .text("Availability of Innovative Voter Registration Methods: ")
+        .attr("y", 50)
+        .attr("font-size", 24)
+        .attr("font-weight", "bold")
+
+    var mapSubheader = downloadContainer.append("g")
+        .attr("id", "map-subheader")
+        .attr("class", "download")
+        .append("text")
+        .text("2000 General Election")
+        .attr("y", 75)
+        .attr("font-size", 24)
+        .attr("font-weight", "bold")
+
+    var headerWidth = mapHeader.node().getBoundingClientRect().width;
+    mapHeader.attr("transform", "translate(" + ((width-headerWidth) / 2) + ", 0)")
+    var subheaderWidth = mapSubheader.node().getBoundingClientRect().width;
+    mapSubheader.attr("transform", "translate(" + ((width-subheaderWidth) / 2) + ", 0)")
+
     // centering the map
     var mapWidth = d3.select('#map-container').node().getBoundingClientRect().width;
     var containerWidth = d3.select("#vreg-map").node().getBoundingClientRect().width;
@@ -512,6 +631,8 @@ Promise.all([
                 }
             }
         }
+
+        mapSubheader.text(inputYear + " General Election")
 
         // update color scale based on the selected policy
         updateColorScale(currColorFilter);
