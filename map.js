@@ -3,8 +3,6 @@ d3.select("body")
     .append("div")
     .attr("id", "vreg-map")
     .style("display", "grid")
-    .style("justify-content", "center")
-    .style("align-items", "center")
     .style("max-width", "666px")
     .style("margin-left", "auto")
     .style("margin-right", "auto");
@@ -782,9 +780,6 @@ Promise.all([
         .duration(500)
         .attr("opacity", 1)
 
-    // initialize map
-    updateMap(2000, "OSA");
-
     // #endregion
 
 
@@ -908,6 +903,9 @@ Promise.all([
     // #endregion
 
     d3.selectAll("text").style("pointer-events", "none");
+
+    // initialize map
+    updateMap(2000, "OSA");
 
 });
 
